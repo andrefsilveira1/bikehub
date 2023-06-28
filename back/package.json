@@ -1,0 +1,7 @@
+{
+  "name" : "bikehub",
+  "type": "module",
+  "dependencies": {
+    "fastify": "^4.18.0"
+  }
+}
