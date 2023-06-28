@@ -16,6 +16,7 @@ defineProps({
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
     </h3>
   </div>
+  <h1>New bikehub project developed by: André Freitas and Mateus Melo</h1>
 </template>
 
 <style scoped>
