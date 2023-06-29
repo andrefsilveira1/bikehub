@@ -1,4 +1,6 @@
 export default (fastify) => ({
+  createRental: (bikeId, userId) =>
+    fastify.knex("bike_rentals").insert([{ bike_id: bikeId, user_id: userId }]),
   findById: async (id) =>
     (
       await fastify.knex

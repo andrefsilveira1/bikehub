@@ -15,8 +15,9 @@ const userService = (fastify) => ({
       {
         user: {
           email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
+          id: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name,
         },
       },
       process.env.JWT_SECRET,
