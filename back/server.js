@@ -1,18 +1,19 @@
-import Fastify from 'fastify'
+import Fastify from "fastify";
+
 const fastify = Fastify({
-  logger: true
-})
+  logger: true,
+});
 
 // Declare a route
-fastify.get('/', async function handler (request, reply) {
-  return { hello: "Everything fine here :D"}
-})
+fastify.get("/", async function handler(request, reply) {
+  return { hello: "Everything fine here :D" };
+});
 
 // Run the server!
 try {
-  await fastify.listen({ port: 3000 })
+  await fastify.listen({ port: 3000 });
 } catch (err) {
-  fastify.log.error(err)
+  fastify.log.error(err);
   console.log("ERROR:", err);
-  process.exit(1)
+  process.exit(1);
 }
