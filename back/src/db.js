@@ -16,7 +16,7 @@ async function database(fastify, _, done) {
   });
   // Testing connection.
   await knex.raw("SELECT 1");
-  // The knex decorator should only be used by low-level instances
+  // The knex decorator should only be used by low-level modules
   // that do direct database interaction.
   fastify.decorate("knex", knex);
   fastify.decorate("daos", { user: userDao(fastify) });
