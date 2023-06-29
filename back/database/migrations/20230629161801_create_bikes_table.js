@@ -15,7 +15,7 @@ export const up = function (knex) {
       table.integer("userId").notNullable();
       table.foreign("userId").references("users.id");
       table.timestamp("startTimestamp").notNullable().defaultTo(knex.fn.now());
-      table.timestamp("endTimestamp").notNullable();
+      table.timestamp("endTimestamp").defaultTo(null);
     }),
   ]);
 };
