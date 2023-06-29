@@ -8,14 +8,14 @@ export const seed = async function (knex) {
   await knex("users").del();
   await knex("users").insert([
     {
-      firstName: "Mateus",
-      lastName: "Nascimento",
+      first_name: "Mateus",
+      last_name: "Nascimento",
       email: "mateusmelornrn@gmail.com",
       password: bcrypt.hashSync("mateusmelo123", bcrypt.genSaltSync(10)),
     },
     {
-      firstName: "André",
-      lastName: "Freitas",
+      first_name: "André",
+      last_name: "Freitas",
       email: "andrefsilveira1@gmail.com",
       password: bcrypt.hashSync("andre123", bcrypt.genSaltSync(10)),
     },

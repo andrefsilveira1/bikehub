@@ -4,8 +4,8 @@
  */
 export const seed = async function (knex) {
   // Deletes ALL existing entries
-  await knex("rentalPoints").del();
   await knex("bikes").del();
+  await knex("rental_points").del();
   const rentalPoints = [
     {
       id: 1,
@@ -52,7 +52,7 @@ export const seed = async function (knex) {
   ];
   await Promise.all(
     rentalPoints.map((rentalPoint) =>
-      knex("rentalPoints").insert({
+      knex("rental_points").insert({
         id: rentalPoint.id,
         name: rentalPoint.name,
         description: rentalPoint.description,
@@ -64,7 +64,7 @@ export const seed = async function (knex) {
   await Promise.all(
     rentalPoints.map((rentalPoint) =>
       knex("bikes").insert(
-        new Array(rentalPoint.bikes).fill({ rentalPointId: rentalPoint.id })
+        new Array(rentalPoint.bikes).fill({ rental_point_id: rentalPoint.id })
       )
     )
   );

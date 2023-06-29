@@ -6,16 +6,17 @@ export const up = function (knex) {
   return Promise.all([
     knex.schema.createTable("bikes", function (table) {
       table.increments("id");
-      table.integer("rentalPointId").notNullable();
-      table.foreign("rentalPointId").references("rentalPoints.id");
+      table.integer("rental_point_id").notNullable();
+      table.foreign("rental_point_id").references("rental_points.id");
     }),
-    knex.schema.createTable("bikeRentals", function (table) {
-      table.integer("bikeId").notNullable();
-      table.foreign("bikeId").references("bikes.id");
-      table.integer("userId").notNullable();
-      table.foreign("userId").references("users.id");
-      table.timestamp("startTimestamp").notNullable().defaultTo(knex.fn.now());
-      table.timestamp("endTimestamp").defaultTo(null);
+    knex.schema.createTable("bike_rentals", function (table) {
+      table.increments("id");
+      table.integer("bike_id").notNullable();
+      table.foreign("bike_id").references("bikes.id");
+      table.integer("user_id").notNullable();
+      table.foreign("user_id").references("users.id");
+      table.timestamp("start_timestamp").notNullable().defaultTo(knex.fn.now());
+      table.timestamp("end_timestamp").defaultTo(null);
     }),
   ]);
 };
@@ -26,7 +27,7 @@ export const up = function (knex) {
  */
 export const down = function (knex) {
   return Promise.all([
-    knex.schema.dropTable("bikeRentals"),
+    knex.schema.dropTable("bike_rentals"),
     knex.schema.dropTable("bikes"),
   ]);
 };
