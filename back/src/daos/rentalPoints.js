@@ -1,8 +1,8 @@
 export default (fastify) => ({
   get: () =>
     fastify
-      .knex("rentalPoints")
-      .join("bikes", "bikes.rentalPointId", "=", "rentalPoints.id")
+      .knex("rental_points")
+      .join("bikes", "bikes.rental_point_id", "=", "rental_points.id")
       .select(
         "name",
         "description",
@@ -10,5 +10,5 @@ export default (fastify) => ({
         "longitude",
         fastify.knex.raw('count(*)::integer as "availableBikes"')
       )
-      .groupBy("rentalPoints.id"),
+      .groupBy("rental_points.id"),
 });
