@@ -7,11 +7,13 @@ export const up = function (knex) {
     knex.schema.createTable("bikes", function (table) {
       table.increments("id");
       table.integer("rentalPointId").notNullable();
-      table.foreign("rentalPointId").references("users.id");
+      table.foreign("rentalPointId").references("rentalPoints.id");
     }),
     knex.schema.createTable("bikeRentals", function (table) {
       table.integer("bikeId").notNullable();
       table.foreign("bikeId").references("bikes.id");
+      table.integer("userId").notNullable();
+      table.foreign("userId").references("users.id");
       table.timestamp("startTimestamp").notNullable().defaultTo(knex.fn.now());
       table.timestamp("endTimestamp").notNullable();
     }),
