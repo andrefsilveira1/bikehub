@@ -1,6 +1,6 @@
 export default function userRoutes(fastify, _, done) {
   fastify.post(
-    "/",
+    "/login",
     {
       schema: {
         body: {
@@ -13,11 +13,12 @@ export default function userRoutes(fastify, _, done) {
         },
       },
     },
-    (req, res) => {
+    async (req, res) => {
       const {
         body: { email, password },
       } = req;
-      res.send({ email, password });
+      const response = await fastify.services.user.login(email, password);
+      return res.code(201).send(response);
     }
   );
   done();

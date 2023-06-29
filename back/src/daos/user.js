@@ -1,3 +1,4 @@
 export default (fastify) => ({
-  hello: () => console.log(fastify.knex),
+  findByEmail: async (email) =>
+    (await fastify.knex("users").where({ email }))[0],
 });

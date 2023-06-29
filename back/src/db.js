@@ -19,7 +19,7 @@ async function database(fastify, _, done) {
   // The knex decorator should only be used by low-level instances
   // that do direct database interaction.
   fastify.decorate("knex", knex);
-  fastify.decorate("db", { user: userDao(fastify) });
+  fastify.decorate("daos", { user: userDao(fastify) });
   done();
 }
 

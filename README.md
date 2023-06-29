@@ -9,6 +9,6 @@ Web project using fastify and vue
 ## Execute backend:
 
 - Create a `.env` file. Take a look at `.env.example`.
-- Run any pending database migrations with `yarn db migrate:latest`
+- Synchronize your local database with any new migrations/seed files with `yarn db:setup`.
 - If you're using Docker, then just run `docker compose up`.
 - If not, then setup your Postgres database and run the server with `yarn dev`.
