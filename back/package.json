@@ -3,11 +3,14 @@
   "type": "module",
   "dependencies": {
     "dotenv": "^16.3.1",
-    "fastify": "^4.18.0"
+    "fastify": "^4.18.0",
+    "knex": "^2.4.2",
+    "pg": "^8.11.1"
   },
   "scripts": {
     "start": "node ./src/server.js",
-    "dev": "nodemon ./src/server.js"
+    "dev": "nodemon ./src/server.js",
+    "migrate": "knex migrate:latest"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
