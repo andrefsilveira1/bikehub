@@ -2,6 +2,7 @@ import fp from "fastify-plugin";
 import Knex from "knex";
 
 import userDao from "./daos/user.js";
+import rentalPointsDao from "./daos/rentalPoints.js";
 
 async function database(fastify, _, done) {
   const knex = Knex({
@@ -19,7 +20,10 @@ async function database(fastify, _, done) {
   // The knex decorator should only be used by low-level modules
   // that do direct database interaction.
   fastify.decorate("knex", knex);
-  fastify.decorate("daos", { user: userDao(fastify) });
+  fastify.decorate("daos", {
+    user: userDao(fastify),
+    rentalPoints: rentalPointsDao(fastify),
+  });
   done();
 }
 
