@@ -11,7 +11,7 @@ config();
 const knex = Knex({
   client: "pg",
   connection: {
-    host: "localhost",
+    host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
