@@ -13,6 +13,15 @@ async function orionPlugin(fastify, _, done) {
         },
       });
     },
+    onBikeReturn: async (rentalPointId) => {
+      const point = await fastify.daos.rentalPoints.findById(rentalPointId);
+      return instance.patch(`/v2/entities/point${rentalPointId}/attrs`, {
+        availableBikes: {
+          type: "Integer",
+          value: point.availableBikes,
+        },
+      });
+    },
   });
   done();
 }
