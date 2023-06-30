@@ -11,7 +11,7 @@ config();
 const knex = Knex({
   client: "pg",
   connection: {
-    host: process.env.DB_HOST,
+    host: "localhost",
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -36,7 +36,7 @@ const points = await knex("rental_points").select(
 try {
   await Promise.all(
     points.map((point) =>
-      axios.delete(`${process.env.ORION_URL}/v2/entities/point${point.id}`)
+      axios.delete(`http://localhost:1026/v2/entities/point${point.id}`)
     )
   );
 } catch {}
@@ -44,14 +44,14 @@ try {
 // Inserting every point into the database again
 Promise.all(
   points.map((point) =>
-    axios.post(`${process.env.ORION_URL}/v2/entities`, {
+    axios.post(`http://localhost:1026/v2/entities`, {
       id: `point${point.id}`,
       type: "point",
       name: {
         value: point.name,
         type: "String",
       },
-      amountBikes: {
+      availableBikes: {
         value: point.amountBikes,
         type: "Integer",
       },
