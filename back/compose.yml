@@ -1,8 +1,33 @@
 services:
+  orion:
+    image: fiware/orion:1.7.0
+    container_name: orion
+    expose:
+      - "1026"
+    ports:
+      - "1026:1026"
+    command: -dbhost mongodb
+    depends_on:
+      - mongodb
+    networks:
+      - default_network
+  mongodb:
+    image: mongo:3.4.7
+    container_name: mongodb
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_volume:/data
+    command: mongod --smallfiles
+    networks:
+      - default_network
   server:
-    container_name: bikehub_server
+    container_name: bikehub-server
     depends_on:
       - database
+      - orion
     env_file: .env
     build:
       context: .
@@ -31,3 +56,4 @@ networks:
   default_network:
 volumes:
   bikehub_volume:
+  mongodb_volume:
