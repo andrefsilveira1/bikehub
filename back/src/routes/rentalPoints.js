@@ -6,5 +6,11 @@ export default function rentalPointsRoutes(fastify, _, done) {
   fastify.get("/rentalPoints", async (req, res) => {
     return fastify.services.rentalPoints.get();
   });
+  fastify.post("/rentalPoint/:id/subscribe", async (req, res) => {
+    const { id } = req.params;
+    await fastify.services.rentalPoints.subscribeToRentalPoint(id);
+    await fastify.orion.subscribeToRentalPoint(id, req.user.id);
+    res.code(204).send();
+  });
   done();
 }

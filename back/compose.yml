@@ -24,7 +24,7 @@ services:
     networks:
       - default_network
   server:
-    container_name: bikehub_server
+    container_name: bikehub-server
     depends_on:
       - database
       - orion

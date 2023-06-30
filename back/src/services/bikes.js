@@ -18,7 +18,7 @@ const bikesService = (fastify) => ({
     if (!bike) throw new APIError("Bike doesn't exist", StatusCodes.NOT_FOUND);
     if (bike.available)
       throw new APIError(
-        "Cannot returned an available bike",
+        "Cannot return an available bike",
         StatusCodes.UNPROCESSABLE_ENTITY
       );
     const rental = await fastify.daos.bike.getActiveRentalForBike(bikeId);
