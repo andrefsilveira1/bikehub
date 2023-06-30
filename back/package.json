@@ -1,7 +1,23 @@
 {
-  "name" : "bikehub",
+  "name": "bikehub",
   "type": "module",
   "dependencies": {
-    "fastify": "^4.18.0"
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.18.0",
+    "fastify-plugin": "^4.5.0",
+    "http-status-codes": "^2.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "knex": "^2.4.2",
+    "pg": "^8.11.1"
+  },
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js",
+    "db:migrate": "knex migrate:latest",
+    "db:seed": "knex seed:run"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
