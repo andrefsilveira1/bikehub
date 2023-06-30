@@ -1,10 +1,9 @@
 <script setup>
-import NavBar from "../components/navbar/NavBar.vue"
+import MainLayout from "../components/layouts/MainLayout.vue";
 </script>
 
 <template>
-  <h1>MAP</h1>
-  <main>
-    <NavBar/>
-  </main>
+  <MainLayout>
+    <h1>eai</h1>
+  </MainLayout>
 </template>
