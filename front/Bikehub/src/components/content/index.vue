@@ -1,15 +1,15 @@
 <template>
-  <h1>Ponto de aluguel</h1>
-    <div class="grid-container">
-      <div class="left-panel">
-        <div v-for="card in cards" :key="card.id">
-          <!-- Essa função será responsável no futuro para realizar um panCrop no mapa -->
-            <Card :title=card.title :subtitle=card.subtitle :bikesnum=card.bikenums
-             @click="selectCard(card.id)" :class="{ 'selected': card.id === selectedCardId }"/>
+  <div class="grid-container">
+    <div class="left-panel">
+      <div v-for="card in cards" :key="card.id">
+          <Card :title=card.title :subtitle=card.subtitle :bikesnum=card.bikenums :lat=card.lat :lon=card.lon
+          @click="selectCard(card.id)" :class="{ 'selected': card.id === selectedCardId}"
+          @sentCordinate="handleCoordinateSelected"
+          />
         </div>
       </div>
       <div class="right-panel">
-        <!-- <h1>O mapa deve ficar aqui -->
+        <MapField ref="map" :lat=receivedCoordinate[0] :lon=receivedCoordinate[1] />
     </div>
 </div>
   </template>
@@ -17,22 +17,23 @@
   <style scoped>
   .grid-container {
     display: grid;
-    grid-template-columns: 1fr 3fr; /* Define as proporções das colunas */
-    height: 100vh; /* Ajuste a altura conforme necessário */
+    grid-template-columns: 1fr 3fr;
+    height: 100vh;
     width: 100%;
   }
   
   .left-panel {
     background-color: white;
-    padding: 20px; /* Espaçamento interno do painel esquerdo */
+    padding: 20px;
+    overflow-y: auto;
+    height: 1000px;
   }
   
   .right-panel {
-    background-color: #000000; /* Cor de fundo do painel direito */
-    padding: 20px; /* Espaçamento interno do painel direito */
+    overflow-y: hidden;
   }
-  h1 {
-    color: aqua;
+  p {
+    color: rgb(233, 0, 0);
 
   }
   .teste {
@@ -42,17 +43,31 @@
 
 <script>
 import Card from "../cardpoints/index.vue";
+import MapField from "../map/index.vue";
+var info;
 export default {
   components: {
-    Card
+    Card,
+    MapField
   },
   data() {
     // Dados estáticos, ver get no server
+    // Criar o mapa
+    // IMD: -5.8317987316920785, -35.205290890708916
+    // Centro de convenções: -5.863775407951932, -35.18072265020563
+    // Favorito: -5.878229195496277, -35.20154908599613
+    // SmartFit: -5.857628344588509, -35.19656159756927
+    // Mc'Donalds: -5.878389594054686, -35.209369969779885
+    // HUOL: -5.7807474182664, -35.19626263463553
+    // Midway: -5.8114397640359865, -35.20469857536568
     return {
+      receivedCoordinate: '',
       cards: [
-        { id: 1, title: 'Via Costeira', subtitle: 'Na frente do centro de convenções', bikenums: '5' },
-        { id: 2, title: 'Ayrton Senna', subtitle: 'Próximo ao Senac', bikenums: '9'  },
-        { id: 3, title: 'Roberto Freire', subtitle: 'Do lado da SmartFit', bikenums: '2' }
+        { id: 1, title: 'IMD', subtitle: 'Na frente do centro de convenções', bikenums: '5', lat:-5.8317987316920785, lon:-35.205290890708916 },
+        { id: 2, title: 'Centro de Convenções', subtitle: 'Próximo ao Senac', bikenums: '9', lat:-5.863775407951932, lon:-35.18072265020563  },
+        { id: 3, title: 'Favorito - Neópolis', subtitle: 'Do lado da SmartFit', bikenums: '2', lat:-5.878229195496277, lon:-35.20154908599613 },
+        { id: 4, title: 'Smart Fit - Roberto Freire', subtitle: 'Na rua do Mcdonalds', bikenums: '2', lat:-5.857628344588509, lon:-35.19656159756927  },
+        { id: 5, title: "Mc'Donalds - Abel Cabral", subtitle: 'No quinto andar do IMD', bikenums: '2', lat:-5.878389594054686, lon:-35.209369969779885  }
       ],
       selectedCardId: null
     };
@@ -60,7 +75,10 @@ export default {
   methods: {
     selectCard(cardId) {
       this.selectedCardId = cardId;
-    }
+    },
+    handleCoordinateSelected(coordinate) {
+      this.receivedCoordinate = coordinate;
+  }
   }
 };
 </script>
