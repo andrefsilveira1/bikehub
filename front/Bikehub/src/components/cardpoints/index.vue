@@ -1,5 +1,5 @@
 <template>
-    <div class="card" :class="{ 'selected': isSelected }">
+    <div class="card" :class="{ 'selected': isSelected }"  @click="sendCoordinate">
       <div class="header">
         <h2 class="title">{{ title }}</h2>
         <h3 class="subtitle">{{ subtitle }}</h3>
@@ -52,6 +52,7 @@
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
+    cursor: pointer;
   }
   .selected {
     border: 2px solid #FF1654;
@@ -62,14 +63,22 @@
   export default {
     data() {
         return {
-            isSelected: false
+            isSelected: false,
         };
     },
     props: {
       title: String,
       subtitle: String,
       bikesnum: String,
+      lat: Number,
+      lon: Number,
     },
+    methods: {
+    sendCoordinate() {
+      const coordinate = [this.lat, this.lon]
+      this.$emit('sentCordinate', coordinate);
+    },
+  },
     
   };
   

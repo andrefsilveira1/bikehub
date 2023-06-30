@@ -32,7 +32,7 @@ import { RouterLink } from 'vue-router';
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #f2f2f2;
+    background-color: white;
     z-index: 999;
   }
   .bike {
