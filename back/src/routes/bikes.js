@@ -9,7 +9,9 @@ export default function bikesRoutes(fastify, _, done) {
     res.code(204).send();
     try {
       await fastify.orion.onBikeRent(bike.rentalPointId);
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   });
   fastify.post("/bike/:id/return", async (req, res) => {
     const { id } = req.params;
@@ -17,7 +19,9 @@ export default function bikesRoutes(fastify, _, done) {
     res.code(204).send();
     try {
       await fastify.orion.onBikeReturn(bike.rentalPointId);
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   });
   done();
 }
