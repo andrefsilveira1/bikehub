@@ -19,7 +19,8 @@
     color: #090C08;
     border-radius: 10px;
     margin-top: 120px;
-    background-color: #F1F2F6;
+    background-color: #fafafa;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 2px 0px 4px rgba(0, 0, 0, 0.2);
     padding: 10px;
     height: 100%;
     max-height: 160px;
