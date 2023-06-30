@@ -65,6 +65,13 @@ import { RouterLink } from 'vue-router';
   .navbar-right li {
     color: #FF1654;
     margin-right: 35px;
+    font-size: 20px;
+  }
+  .navbar-right a:hover {
+    color: #b90221;
+  }
+  .navbar-right li:hover {
+    color: #9e002a;
   }
   
   .navbar-right a {
