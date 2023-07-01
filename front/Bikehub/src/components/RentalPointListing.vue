@@ -1,50 +1,9 @@
 <script setup>
+const { cards } = defineProps({ cards: { required: true } });
 import { reactive, ref, computed } from "vue";
 import RentalPointCard from "./RentalPointCard.vue";
 
 const searchInput = ref("");
-const cards = reactive([
-  {
-    id: 1,
-    title: "IMD",
-    subtitle: "Na frente do centro de convenções",
-    bikenums: 5,
-    lat: -5.8317987316920785,
-    lon: -35.205290890708916,
-  },
-  {
-    id: 2,
-    title: "Centro de Convenções",
-    subtitle: "Próximo ao Senac",
-    bikenums: 9,
-    lat: -5.863775407951932,
-    lon: -35.18072265020563,
-  },
-  {
-    id: 3,
-    title: "Favorito - Neópolis",
-    subtitle: "Do lado da SmartFit",
-    bikenums: 2,
-    lat: -5.878229195496277,
-    lon: -35.20154908599613,
-  },
-  {
-    id: 4,
-    title: "Smart Fit - Roberto Freire",
-    subtitle: "Na rua do Mcdonalds",
-    bikenums: 2,
-    lat: -5.857628344588509,
-    lon: -35.19656159756927,
-  },
-  {
-    id: 5,
-    title: "Mc'Donalds - Abel Cabral",
-    subtitle: "No quinto andar do IMD",
-    bikenums: 2,
-    lat: -5.878389594054686,
-    lon: -35.209369969779885,
-  },
-]);
 
 const filteredPoints = computed(() => {
   if (searchInput.value === "") return cards;
@@ -54,8 +13,6 @@ const filteredPoints = computed(() => {
       point.subtitle.toLowerCase().includes(searchInput.value.toLowerCase())
   );
 });
-
-console.log(filteredPoints);
 </script>
 <template>
   <div class="left-panel">
