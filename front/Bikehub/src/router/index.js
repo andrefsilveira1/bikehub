@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MapView from "../views/MapView.vue";
-import SubscriptionsView from "../../src/views/SubscriptionsView.vue"
+import SubscriptionsView from "../../src/views/SubscriptionsView.vue";
+import LoginView from "../views/LoginView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -12,7 +13,12 @@ const router = createRouter({
     {
       path: "/subscriptions",
       name: "subscriptions",
-      component: SubscriptionsView
+      component: SubscriptionsView,
+    },
+    {
+      path: "/",
+      name: "login",
+      component: LoginView,
     }
   ],
 });
