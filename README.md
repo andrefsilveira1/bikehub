@@ -12,3 +12,15 @@ Web project using fastify and vue
 - Synchronize your local database with any new migrations/seed files with `yarn db:setup`.
 - If you're using Docker, then just run `docker compose up`.
 - If not, then setup your Postgres database and run the server with `yarn dev`.
+
+## Todo list
+
+- [ ] Carregar os pontos de aluguel a partir do back
+- [ ] Finalizar modal no front
+    - [ ] Implementar componente de tabela no front
+    - [ ] Implementar rota no back de recuperar bikes de um ponto
+    - [ ] Implementar aluguel de bike no front (integrar com rota ja pronta no back)
+    - [ ] Estabelecer comunicacao WebSocket
+    - [ ] Implementar rota no back de recuperar os alugueis de um usuario
+    - [ ] Implementar tela de seus alugueis
+    - [ ] Implementar inscricao do usuario no front
