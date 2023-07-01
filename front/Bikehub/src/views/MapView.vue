@@ -14,17 +14,6 @@ main {
   justify-content: space-between;
 }
 
-.left-panel {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
-  width: 30%;
-}
-
-:global(.left-panel > * + *) {
-  margin-top: 3rem;
-}
-
 .right-panel {
   overflow: hidden;
   height: 100%;
@@ -36,9 +25,7 @@ main {
 <template>
   <MainLayout>
     <main>
-      <div class="left-panel">
-        <RentalPointListing />
-      </div>
+      <RentalPointListing />
       <div class="right-panel">
         <Map />
       </div>

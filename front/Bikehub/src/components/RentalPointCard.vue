@@ -20,6 +20,7 @@ const availabilityText = computed(() => {
 </template>
 <style scoped>
 .card {
+  background: white;
   border: 1px solid #c4c4c4;
   box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.25);
   border-radius: 6px;

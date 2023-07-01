@@ -46,25 +46,61 @@ const cards = reactive([
     lon: -35.209369969779885,
   },
 ]);
-
-function selectCard(cardId) {
-  selectedCardId.value = cardId;
-}
-
-function handleCoordinateSelected(coordinate) {
-  receivedCoordinate.value = coordinate;
-}
 </script>
 <template>
-  <h2>Pontos de aluguel</h2>
-  <RentalPointCard v-for="card in cards" :key="card.id" :point="card" />
+  <div class="left-panel">
+    <h2>Pontos de aluguel</h2>
+    <input type="text" placeholder="Busque por pontos de aluguel" />
+    <div class="left-panel__listing">
+      <RentalPointCard v-for="card in cards" :key="card.id" :point="card" />
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.left-panel {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  height: 100%;
+  width: 30%;
+}
+
+.left-panel__listing {
+  padding-top: 2rem;
+  height: calc(100% - 100px - 2rem);
+  overflow-y: auto;
+}
+
+.left-panel__listing > * + * {
+  margin-top: 2rem;
+}
+
 h2 {
   color: #090c08;
   font-size: 2.8rem;
   font-family: Inter;
   font-weight: 500;
+  margin-bottom: 3rem;
+}
+
+input {
+  border-radius: 7px;
+  border: 1px solid #c4c4c4;
+  font-size: 1.6rem;
+
+  width: 100%;
+  padding: 2rem 1.6rem;
+
+  transition: 0.3s;
+}
+
+input::placeholder {
+  color: rgba(9, 12, 8, 0.6);
+  font-style: italic;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #ff1654;
 }
 </style>
