@@ -1,21 +1,15 @@
 <script setup>
-import { computed } from "vue";
 import Button from "./common/Button.vue";
+import BikeAvailabilityText from "./BikeAvailabilityText.vue";
 
 const { point } = defineProps(["point"]);
-
-const availabilityText = computed(() => {
-  return `${point.bikenums === 0 ? "Sem" : point.bikenums} bicicleta${
-    point.bikenums !== 1 ? "s" : ""
-  } disponíve${point.bikenums !== 1 ? "s" : ""}`;
-});
 </script>
 <template>
   <article class="card">
     <h1>{{ point.title }}</h1>
     <p>{{ point.subtitle }}</p>
-    <span>{{ availabilityText }}</span>
-    <Button>Visualizar</Button>
+    <span><BikeAvailabilityText :amount="point.bikenums" /></span>
+    <Button @click="$emit('open-modal', point)">Visualizar</Button>
   </article>
 </template>
 <style scoped>

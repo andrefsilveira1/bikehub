@@ -1,6 +1,6 @@
 <script setup>
 const { cards } = defineProps({ cards: { required: true } });
-import { reactive, ref, computed } from "vue";
+import { ref, computed } from "vue";
 import RentalPointCard from "./RentalPointCard.vue";
 
 const searchInput = ref("");
@@ -25,6 +25,7 @@ const filteredPoints = computed(() => {
     <div class="left-panel__listing">
       <RentalPointCard
         v-for="point in filteredPoints"
+        @open-modal="(point) => $emit('open-modal', point)"
         :key="point.id"
         :point="point"
       />

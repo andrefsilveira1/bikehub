@@ -1,4 +1,5 @@
 <script setup>
+defineEmits(["click"]);
 const { variant } = defineProps({
   variant: {
     default: "primary",
@@ -7,7 +8,7 @@ const { variant } = defineProps({
 </script>
 
 <template>
-  <button :class="variant"><slot /></button>
+  <button :class="variant" @click="$emit('click')"><slot /></button>
 </template>
 
 <style scoped>

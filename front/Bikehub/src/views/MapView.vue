@@ -1,9 +1,10 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import MainLayout from "../components/layouts/MainLayout.vue";
 import RentalPointListing from "../components/RentalPointListing.vue";
 import Map from "../components/Map.vue";
 
+const selectedPoint = ref(null);
 const points = reactive([
   {
     id: 1,
@@ -46,6 +47,10 @@ const points = reactive([
     lon: -35.209369969779885,
   },
 ]);
+
+function openModal(point) {
+  selectedPoint.value = point;
+}
 </script>
 
 <style scoped>
@@ -57,12 +62,57 @@ main {
   display: flex;
   justify-content: space-between;
 }
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+
+  padding: 3.6rem 2.8rem;
+
+  border-radius: 6px;
+  border: 1px solid #c4c4c4;
+  background: #f1f2f6;
+  box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.25);
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal__title {
+  font-size: 2.3rem;
+  font-weight: 500;
+}
 </style>
 
 <template>
   <MainLayout>
     <main>
-      <RentalPointListing :cards="points" />
+      <div class="modal-container" v-if="selectedPoint !== null">
+        <div class="modal">
+          <header class="modal__header">
+            <h1 class="modal__title">Ponto {{ selectedPoint.title }}</h1>
+          </header>
+        </div>
+      </div>
+      <RentalPointListing
+        :cards="points"
+        @open-modal="(point) => openModal(point)"
+      />
       <Map :points="points" />
     </main>
   </MainLayout>
