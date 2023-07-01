@@ -1,9 +1,8 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, computed } from "vue";
 import RentalPointCard from "./RentalPointCard.vue";
 
-let selectedCardId = ref(null);
-let receivedCoordinate = ref("");
+const searchInput = ref("");
 const cards = reactive([
   {
     id: 1,
@@ -46,13 +45,32 @@ const cards = reactive([
     lon: -35.209369969779885,
   },
 ]);
+
+const filteredPoints = computed(() => {
+  if (searchInput.value === "") return cards;
+  return cards.filter(
+    (point) =>
+      point.title.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+      point.subtitle.toLowerCase().includes(searchInput.value.toLowerCase())
+  );
+});
+
+console.log(filteredPoints);
 </script>
 <template>
   <div class="left-panel">
     <h2>Pontos de aluguel</h2>
-    <input type="text" placeholder="Busque por pontos de aluguel" />
+    <input
+      type="text"
+      placeholder="Busque por pontos de aluguel"
+      v-model="searchInput"
+    />
     <div class="left-panel__listing">
-      <RentalPointCard v-for="card in cards" :key="card.id" :point="card" />
+      <RentalPointCard
+        v-for="point in filteredPoints"
+        :key="point.id"
+        :point="point"
+      />
     </div>
   </div>
 </template>
