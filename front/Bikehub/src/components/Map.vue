@@ -40,10 +40,9 @@ onMounted(() => {
   );
   midway.bindPopup("Midway");
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution:
-      'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+  L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
     maxZoom: 20,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
   }).addTo(mapRef.value);
 });
 </script>
