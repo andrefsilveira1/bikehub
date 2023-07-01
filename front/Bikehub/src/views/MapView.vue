@@ -117,7 +117,11 @@ main {
 <template>
   <MainLayout>
     <main>
-      <div class="modal-container" v-if="selectedPoint !== null">
+      <div
+        class="modal-container"
+        v-if="selectedPoint !== null"
+        @click.self="selectedPoint = null"
+      >
         <div class="modal">
           <header class="modal__header">
             <h1 class="modal__title">Ponto {{ selectedPoint.title }}</h1>
