@@ -57,22 +57,13 @@ main {
   display: flex;
   justify-content: space-between;
 }
-
-.right-panel {
-  overflow: hidden;
-  height: 100%;
-  width: 67%;
-  background: blue;
-}
 </style>
 
 <template>
   <MainLayout>
     <main>
       <RentalPointListing :cards="points" />
-      <div class="right-panel">
-        <Map :points="points" />
-      </div>
+      <Map :points="points" />
     </main>
   </MainLayout>
 </template>

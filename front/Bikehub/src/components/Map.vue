@@ -26,9 +26,17 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div ref="mapContainer" class="map-container"></div>
+  <div class="right-panel">
+    <div ref="mapContainer" class="map-container"></div>
+  </div>
 </template>
 <style scoped>
+.right-panel {
+  overflow: hidden;
+  height: 100%;
+  width: 67%;
+  background: blue;
+}
 .map-container {
   height: 100%;
   width: 100%;
