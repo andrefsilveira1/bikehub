@@ -3,6 +3,8 @@ import { reactive, ref } from "vue";
 import MainLayout from "../components/layouts/MainLayout.vue";
 import RentalPointListing from "../components/RentalPointListing.vue";
 import Map from "../components/Map.vue";
+import Button from "../components/common/Button.vue";
+import BikeAvailabilityText from "../components/BikeAvailabilityText.vue";
 
 const selectedPoint = ref(null);
 const points = reactive([
@@ -86,16 +88,29 @@ main {
   border: 1px solid #c4c4c4;
   background: #f1f2f6;
   box-shadow: 2px 3px 6px 0px rgba(0, 0, 0, 0.25);
+
+  width: 900px;
+
+  background: white;
 }
 
 .modal__header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .modal__title {
   font-size: 2.3rem;
   font-weight: 500;
+}
+
+.modal span {
+  display: block;
+  color: rgba(9, 12, 8, 0.8);
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 3rem;
 }
 </style>
 
@@ -106,7 +121,11 @@ main {
         <div class="modal">
           <header class="modal__header">
             <h1 class="modal__title">Ponto {{ selectedPoint.title }}</h1>
+            <Button variant="secondary">Inscrever-se</Button>
           </header>
+          <span>
+            <BikeAvailabilityText :amount="selectedPoint.bikenums" />
+          </span>
         </div>
       </div>
       <RentalPointListing

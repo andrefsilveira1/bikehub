@@ -2,7 +2,8 @@
 const { amount } = defineProps(["amount"]);
 </script>
 <template>
-  {{amount === 0 ? "Sem"}} bicicleta{{ amount === 1 ? "s" : "" }} disponíve{{
+  {{ amount === 0 ? "Sem" : amount }} bicicleta{{
     amount === 1 ? "s" : ""
   }}
+  disponíve{{ amount === 1 ? "s" : "is" }}
 </template>
