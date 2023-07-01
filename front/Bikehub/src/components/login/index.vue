@@ -21,6 +21,8 @@
   </template>
   
   <script>
+  import axios from 'axios';
+  import router from "../../router/index";
   export default {
     data() {
       return {
@@ -29,12 +31,30 @@
       };
     },
     methods: {
-      login() {
-        console.log('Email:', this.email);
-        console.log('Senha:', this.password);
+      async login() {
+        const loginData = {
+          email: this.email,
+          password: this.password,
+        };
+        
+        try {
+          console.log("LOGIN:", loginData);
+          const response = await axios.post('http://localhost:3000/user/login', loginData);
+          const token = {
+            token: response.data
+          };
+          
+          const validate = await axios.post('http://localhost:3000/validate', token);
+      
+        if (validate) {
+          router.push('/map');
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
-  };
+  }
+};
   </script>
   
   <style scoped>
