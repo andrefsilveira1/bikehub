@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import Card from "./cardpoints/index.vue";
+import MapField from "./map/index.vue";
 
 let selectedCardId = ref(null);
 let receivedCoordinate = ref("");
@@ -71,7 +72,9 @@ function handleCoordinateSelected(coordinate) {
         />
       </div>
     </div>
-    <div class="right-panel"></div>
+    <div class="right-panel">
+      <MapField :lat=receivedCoordinate[0] :lon="receivedCoordinate[1]"/>
+    </div>
   </div>
 </template>
 
