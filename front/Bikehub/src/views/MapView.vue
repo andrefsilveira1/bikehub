@@ -1,6 +1,7 @@
 <script setup>
 import MainLayout from "../components/layouts/MainLayout.vue";
 import RentalPointListing from "../components/RentalPointListing.vue";
+import Map from "../components/Map.vue";
 </script>
 
 <style scoped>
@@ -38,7 +39,9 @@ main {
       <div class="left-panel">
         <RentalPointListing />
       </div>
-      <div class="right-panel"></div>
+      <div class="right-panel">
+        <Map />
+      </div>
     </main>
   </MainLayout>
 </template>
