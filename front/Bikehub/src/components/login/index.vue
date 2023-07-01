@@ -9,7 +9,7 @@
           <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" v-model="email" required placeholder="seuemail@email.com">
-          </div>
+        </div>
           <div class="form-group">
             <label for="password">Senha:</label>
             <input type="password" id="password" v-model="password" required>
@@ -72,6 +72,9 @@
     border-radius: 10px;
     padding: 5px;
     margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   h2 {
@@ -103,7 +106,7 @@
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
-    margin-bottom: 5px;
+    padding-bottom: 40px;
     border: 1px solid #ff1654;
   }
 
