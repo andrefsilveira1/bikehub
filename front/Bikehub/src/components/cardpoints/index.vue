@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .card {
   cursor: pointer;
   color: #090c08;
