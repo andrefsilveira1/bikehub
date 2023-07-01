@@ -44,7 +44,6 @@
 <script>
 import Card from "../cardpoints/index.vue";
 import MapField from "../map/index.vue";
-var info;
 export default {
   components: {
     Card,
