@@ -1,10 +1,19 @@
 <script setup>
-import NavBar from "../components/navbar/NavBar.vue"
+import MainLayout from "../components/layouts/MainLayout.vue";
+import RentalPointListing from "../components/RentalPointListing.vue";
 </script>
 
+<style scoped>
+main {
+  display: flex;
+  justify-content: space-between;
+  height: calc(100vh - 120px); /* header height is 120px */
+  width: 100%;
+}
+</style>
+
 <template>
-  <h1>MAP</h1>
-  <main>
-    <NavBar/>
-  </main>
+  <MainLayout>
+    <RentalPointListing />
+  </MainLayout>
 </template>
