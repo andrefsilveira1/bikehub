@@ -11,7 +11,7 @@ const auth = useAuthStore();
 
 <template>
   <div class="login-container">
-    <img src="/bike.jpg" alt="Imagem de fundo" class="main-img" />
+    <img src="/bikeslogin.png" alt="Imagem de fundo" class="main-img" />
     <div class="login-container__right">
       <img src="/logo.svg" class="logo" />
       <form class="login-form" @submit.prevent="auth.login(email, password)">
