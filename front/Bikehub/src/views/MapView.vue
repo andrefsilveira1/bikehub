@@ -7,12 +7,10 @@ import Button from "../components/common/Button.vue";
 import BikeAvailabilityText from "../components/BikeAvailabilityText.vue";
 import api from "../api";
 import Table from "../components/Table.vue";
-import usePointsStore from "../stores/points";
-
-const pointsStore = usePointsStore();
 
 const selectedPoint = ref(null);
 const selectedCoordinate = reactive([]);
+const points = reactive([]);
 
 function openModal(point) {
   selectedPoint.value = point;
@@ -24,7 +22,12 @@ function handleSentCoordinate(coordinate) {
 }
 
 onMounted(async () => {
-  await pointsStore.init();
+  try {
+    const { data } = await api.get("/rentalPoints");
+    points.push(...data);
+  } catch (e) {
+    alert(e);
+  }
 });
 </script>
 
@@ -107,12 +110,12 @@ main {
         </div>
       </div>
       <RentalPointListing
-        :cards="pointsStore.points"
+        :cards="points"
         @open-modal="(point) => openModal(point)"
         @sentCoordinate="handleSentCoordinate"
       />
       <Map
-        :points="pointsStore.points"
+        :points="points"
         :lat="selectedCoordinate[0]"
         :lon="selectedCoordinate[1]"
       />
