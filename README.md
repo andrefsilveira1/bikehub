@@ -15,10 +15,10 @@ Web project using fastify and vue
 
 ## Todo list
 
-- [ ] Carregar os pontos de aluguel a partir do back
+- [x] Carregar os pontos de aluguel a partir do back
 - [ ] Finalizar modal no front
-- [ ] Implementar componente de tabela no front
-- [ ] Implementar rota no back de recuperar bikes de um ponto
+- [x] Implementar componente de tabela no front
+- [x] Implementar rota no back de recuperar bikes de um ponto
 - [ ] Implementar aluguel de bike no front (integrar com rota ja pronta no back)
 - [ ] Estabelecer comunicacao WebSocket
 - [ ] Implementar rota no back de recuperar os alugueis de um usuario
