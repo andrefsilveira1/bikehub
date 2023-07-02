@@ -50,9 +50,17 @@ const points = reactive([
   },
 ]);
 
+const selectedCoordinate = reactive([]);
+
 function openModal(point) {
   selectedPoint.value = point;
 }
+
+function handleSentCoordinate(coordinate) {
+  selectedCoordinate[0] = coordinate[0];
+  selectedCoordinate[1] = coordinate[1];
+}
+
 </script>
 
 <style scoped>
@@ -135,8 +143,9 @@ main {
       <RentalPointListing
         :cards="points"
         @open-modal="(point) => openModal(point)"
+        @sentCoordinate="handleSentCoordinate"
       />
-      <Map :points="points" />
+      <Map :points="points" :lat="selectedCoordinate[0]" :lon="selectedCoordinate[1]" />
     </main>
   </MainLayout>
 </template>

@@ -2,7 +2,11 @@
 import Button from "./common/Button.vue";
 import BikeAvailabilityText from "./BikeAvailabilityText.vue";
 
-const { point } = defineProps(["point"]);
+const { point, lat, lon } = defineProps({
+  point: { type: Object, required: true },
+  lat: Number,
+  lon: Number,
+});
 </script>
 <template>
   <article class="card">
