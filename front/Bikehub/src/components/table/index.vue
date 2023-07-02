@@ -10,10 +10,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in tableData" :key="index" :class="{ 'table-row-odd': index % 2 === 0, 'table-row-even': index % 2 !== 0 }">
-            <td>{{ item.col1 }}</td>
-            <td>{{ item.col2 }}</td>
-            <td>{{ item.col3 }}</td>
+          <tr v-for="(item, index) in bikeRow" :key="index" :class="{ 'table-row-odd': index % 2 === 0, 'table-row-even': index % 2 !== 0 }">
+            <td>{{ item.id}}</td>
+            <td>Disponível</td>
+            <td>Não definido</td>
             <td><button class="button">Alugar</button></td>
           </tr>
         </tbody>
@@ -22,12 +22,33 @@
   </template>
   
   <script setup>
-  import Button from "../common/Button.vue"
-  const tableData = [
-    { col1: 'Valor 1', col2: 'Valor 2', col3: 'Valor 3' },
-    { col1: 'Valor 4', col2: 'Valor 5', col3: 'Valor 6' },
-    { col1: 'Valor 7', col2: 'Valor 8', col3: 'Valor 9' },
-  ];
+    import { onMounted, reactive } from "vue";
+
+    import Button from "../common/Button.vue"
+    import api from "../../api"
+    const props = defineProps({
+    points: { type: Object, required: true },
+    });
+
+    const bikeRow = reactive([]);
+    onMounted(async () => {
+    try {
+        const bikes = await api.get(`/rentalPoint/${props.points.id}/bikes`);
+        bikeRow.push(...bikes.data);
+
+    } catch (e) {
+        alert(e);
+    }
+    });
+    function rentBike(id) {
+        try {
+            // await api.get(`/rent`) Implementar rota de alugar bike
+        } catch (err) {
+            // console.log("ERR:", err)
+        }
+    }
+
+
   </script>
   
   <style>

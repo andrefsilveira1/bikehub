@@ -106,7 +106,7 @@ main {
           <span>
             <BikeAvailabilityText :amount="selectedPoint.bikenums" />
           </span>
-          <Table />
+          <Table :points="selectedPoint" />
         </div>
       </div>
       <RentalPointListing
