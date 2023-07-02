@@ -1,15 +1,14 @@
 <script setup>
-import { ref } from "vue";
 import { RouterView } from "vue-router";
 import Loader from "./components/common/Loader.vue";
+import useAuthStore from "./stores/auth";
 
-const loading = ref(true);
-const loggedIn = ref(false);
+const auth = useAuthStore();
 </script>
 
 <template>
   <div
-    v-if="loading"
+    v-if="!auth.loading"
     style="
       position: absolute;
       top: 50%;
@@ -19,4 +18,5 @@ const loggedIn = ref(false);
   >
     <Loader :size="15" />
   </div>
+  <RouterView v-else />
 </template>

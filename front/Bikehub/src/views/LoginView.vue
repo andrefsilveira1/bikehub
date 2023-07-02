@@ -1,36 +1,12 @@
 <script setup>
 import { ref } from "vue";
 import Input from "../components/common/Input.vue";
-import api from "../api";
-import router from "../router";
+import useAuthStore from "../stores/auth";
 
 const email = ref("");
 const password = ref("");
 
-async function login() {
-  const loginData = {
-    email: email.value,
-    password: password.value,
-  };
-
-  try {
-    const response = await api.post("/user/login", loginData);
-    const token = {
-      token: response.data,
-    };
-
-    const validate = await api.post("/validate", token);
-
-    if (validate) {
-      api.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${token.token.jwt}`;
-      router.push("/map");
-    }
-  } catch (error) {
-    alert(error.response.data.message);
-  }
-}
+const auth = useAuthStore();
 </script>
 
 <template>
@@ -38,7 +14,7 @@ async function login() {
     <img src="/bike.jpg" alt="Imagem de fundo" class="main-img" />
     <div class="login-container__right">
       <img src="/logo.svg" class="logo" />
-      <form class="login-form" @submit.prevent="login">
+      <form class="login-form" @submit.prevent="auth.login(email, password)">
         <div class="form-group">
           <label for="email">Email:</label>
           <Input
