@@ -1,6 +1,6 @@
 <script setup>
 const { cards } = defineProps({ cards: { required: true } });
-import { ref, computed, defineEmits } from "vue";
+import { ref, computed } from "vue";
 import RentalPointCard from "./RentalPointCard.vue";
 
 const searchInput = ref("");

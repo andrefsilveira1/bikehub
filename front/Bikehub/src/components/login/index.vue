@@ -38,7 +38,6 @@
         };
         
         try {
-          console.log("LOGIN:", loginData);
           const response = await axios.post('http://localhost:3000/user/login', loginData);
           const token = {
             token: response.data
@@ -47,6 +46,7 @@
           const validate = await axios.post('http://localhost:3000/validate', token);
       
         if (validate) {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token.token.jwt}`;
           router.push('/map');
         }
       } catch (error) {

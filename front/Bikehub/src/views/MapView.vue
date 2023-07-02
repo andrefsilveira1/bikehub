@@ -1,10 +1,11 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted, toRaw } from "vue";
 import MainLayout from "../components/layouts/MainLayout.vue";
 import RentalPointListing from "../components/RentalPointListing.vue";
 import Map from "../components/Map.vue";
 import Button from "../components/common/Button.vue";
 import BikeAvailabilityText from "../components/BikeAvailabilityText.vue";
+import axios from "axios";
 
 const selectedPoint = ref(null);
 const points = reactive([
@@ -51,7 +52,6 @@ const points = reactive([
 ]);
 
 const selectedCoordinate = reactive([]);
-
 function openModal(point) {
   selectedPoint.value = point;
 }
@@ -60,6 +60,31 @@ function handleSentCoordinate(coordinate) {
   selectedCoordinate[0] = coordinate[0];
   selectedCoordinate[1] = coordinate[1];
 }
+async function fetchRentalPoints() {
+  try {
+    const response = await axios.get('http://localhost:3000/rentalPoints');
+    return response.data;
+  } catch (error) {
+    console.error('Erro:', error);
+    throw error;
+  }
+}
+
+let rentPoint = reactive([]);
+async function getRentPoints() {
+  try {
+    const data = await fetchRentalPoints();
+    rentPoint.splice(0, rentPoint.length, ...data);
+  } catch (error) {
+    console.error("Erro ao buscar os pontos de aluguel:", error);
+    throw error;
+  }
+}
+
+onMounted(() => {
+  getRentPoints();
+});
+console.log("RENT:>", rentPoint);
 
 </script>
 
@@ -145,7 +170,7 @@ main {
         @open-modal="(point) => openModal(point)"
         @sentCoordinate="handleSentCoordinate"
       />
-      <Map :points="points" :lat="selectedCoordinate[0]" :lon="selectedCoordinate[1]" />
+      <Map :points="rentPoint" :lat="selectedCoordinate[0]" :lon="selectedCoordinate[1]" />
     </main>
   </MainLayout>
 </template>

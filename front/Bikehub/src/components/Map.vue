@@ -39,7 +39,7 @@ watchEffect(() => {
 
 function zoomToRegion(lat, lon) {
   const regionCoordinates = [lat, lon];
-  const zoomLevel = 18;
+  const zoomLevel = 19;
   mapRef.value.setView(regionCoordinates, zoomLevel);
 }
 </script>
