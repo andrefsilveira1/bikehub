@@ -6,6 +6,7 @@ import Map from "../components/Map.vue";
 import Button from "../components/common/Button.vue";
 import BikeAvailabilityText from "../components/BikeAvailabilityText.vue";
 import api from "../api";
+import Table from "../components/table/index.vue"
 
 const selectedPoint = ref(null);
 const selectedCoordinate = reactive([]);
@@ -105,6 +106,7 @@ main {
           <span>
             <BikeAvailabilityText :amount="selectedPoint.bikenums" />
           </span>
+          <Table />
         </div>
       </div>
       <RentalPointListing
