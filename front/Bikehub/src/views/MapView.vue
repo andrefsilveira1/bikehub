@@ -151,8 +151,8 @@ main {
       />
       <Map
         :points="points"
-        :lat="selectedCoordinate[0]"
-        :lon="selectedCoordinate[1]"
+        :latitude="selectedCoordinate[0]"
+        :longitude="selectedCoordinate[1]"
       />
     </main>
   </MainLayout>

@@ -6,8 +6,8 @@ import redMarker from "../assets/marker.png";
 
 const props = defineProps({
   points: { type: Array, required: true },
-  lat: Number,
-  lon: Number,
+  latitude: Number,
+  longitude: Number,
 });
 
 const mapContainer = ref(null);
@@ -43,12 +43,13 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
+  console.log("MUDOU")
   if (
     mapRef.value &&
     props.latitude !== undefined &&
     props.longitude !== undefined
   ) {
-    zoomToRegion(props.latiude, props.longitude);
+    zoomToRegion(props.latitude, props.longitude);
   }
 });
 
