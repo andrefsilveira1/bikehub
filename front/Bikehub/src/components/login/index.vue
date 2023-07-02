@@ -1,129 +1,125 @@
+<script setup>
+import { ref } from "vue";
+import Input from "../common/Input.vue";
+import api from "../../api";
+import router from "../../router/index";
+
+const email = ref("");
+const password = ref("");
+
+async function login() {
+  const loginData = {
+    email: email.value,
+    password: password.value,
+  };
+
+  try {
+    const response = await api.post("/user/login", loginData);
+    const token = {
+      token: response.data,
+    };
+
+    const validate = await api.post("/validate", token);
+
+    if (validate) {
+      api.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token.token.jwt}`;
+      router.push("/map");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+</script>
+
 <template>
   <div class="login-container">
-    <div class="image-container">
-      <img src="/bike.jpg" alt="Imagem de fundo" />
-    </div>
-    <div class="login-card">
-      <img src="/logo.svg" />
-      <form class="loginForm">
+    <img src="/bike.jpg" alt="Imagem de fundo" class="main-img" />
+    <div class="login-container__right">
+      <img src="/logo.svg" class="logo" />
+      <form class="login-form">
         <div class="form-group">
           <label for="email">Email:</label>
-          <input
+          <Input
+            v-model="email"
+            placeholder="email@seuemail.com"
             type="email"
             id="email"
-            v-model="email"
             required
-            placeholder="seuemail@email.com"
           />
         </div>
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 2rem; margin-bottom: 4rem">
           <label for="password">Senha:</label>
-          <input type="password" id="password" v-model="password" required />
+          <Input
+            type="password"
+            id="password"
+            v-model="password"
+            required
+            placeholder="Sua senha aqui"
+          />
         </div>
-        <a href="#" class="login-button" @click="login"><span>Entrar</span></a>
+        <button class="login-button" @click="login" type="submit">
+          <span>Entrar</span>
+        </button>
       </form>
     </div>
   </div>
 </template>
 
-<script>
-import api from "../../api";
-import router from "../../router/index";
-export default {
-  data() {
-    return {
-      email: "",
-      password: "",
-    };
-  },
-  methods: {
-    async login() {
-      const loginData = {
-        email: this.email,
-        password: this.password,
-      };
-
-      try {
-        const response = await api.post("/user/login", loginData);
-        const token = {
-          token: response.data,
-        };
-
-        const validate = await api.post("/validate", token);
-
-        if (validate) {
-          api.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${token.token.jwt}`;
-          router.push("/map");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  },
-};
-</script>
-
 <style scoped>
 .login-container {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
+  display: flex;
   height: 100vh;
-}
-
-.image-container {
-  position: relative;
   overflow: hidden;
 }
 
-.image-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+.main-img {
+  width: 75%;
   height: 100%;
   object-fit: cover;
 }
 
-.login-card {
+.login-container__right {
   background-color: white;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  padding-top: 10%;
+
   width: 100%;
+  height: 100%;
 }
-.loginForm {
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 2px 0px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 5px;
-  margin-top: 1rem;
+
+.logo {
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+}
+
+.login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  width: 90%;
+  margin: 0 auto;
+}
+
+.form-group {
+  width: 100%;
 }
 
 h2 {
   margin-bottom: 1rem;
 }
 
-.form-group {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  font-size: 2rem;
-  margin: 4rem;
-}
-
 label {
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ff1654;
-  border-radius: 4px;
+  font-weight: 300;
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 0.7rem;
 }
 
 .login-button {
@@ -138,9 +134,9 @@ input {
   border: 1px solid #ff1654;
 }
 
-a {
+button {
   display: block;
-  width: 200px;
+  width: 80%;
   height: 40px;
   line-height: 40px;
   font-size: 18px;
@@ -154,12 +150,12 @@ a {
   transition: all 0.35s;
 }
 
-a span {
+button span {
   position: relative;
   z-index: 2;
 }
 
-a:after {
+button:after {
   position: absolute;
   content: "";
   top: 0;
@@ -171,13 +167,11 @@ a:after {
   border-radius: 4px;
 }
 
-a:hover {
+button:hover {
   color: #fff;
 }
-span {
-}
 
-a:hover:after {
+button:hover:after {
   width: 100%;
 }
 </style>
