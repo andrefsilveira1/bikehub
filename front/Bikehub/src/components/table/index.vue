@@ -1,5 +1,4 @@
 <script setup>
-const {} = defineProps(["rows", "columns"]);
 import Button from "../common/Button.vue";
 const tableData = [
   { col1: "Valor 1", col2: "Valor 2", col3: "Valor 3" },
@@ -15,30 +14,23 @@ const tableData = [
         <tr>
           <th>Identificador</th>
           <th>Status</th>
-          <th>Horário de Aluguel</th>
+          <th style="text-align: center">Horário de Aluguel</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(item, index) in tableData"
-          :key="index"
-          :class="{
-            'table-row-odd': index % 2 === 0,
-            'table-row-even': index % 2 !== 0,
-          }"
-        >
+        <tr v-for="(item, index) in tableData" :key="index">
           <td>{{ item.col1 }}</td>
           <td>{{ item.col2 }}</td>
-          <td>{{ item.col3 }}</td>
-          <td><button class="button">Alugar</button></td>
+          <td style="text-align: center">{{ item.col3 }}</td>
+          <td style="text-align: center"><Button>Alugar</Button></td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
 
-<style>
+<style scoped>
 .table-container {
   width: 100%;
   overflow-x: auto;
@@ -49,30 +41,14 @@ const tableData = [
   border-collapse: collapse;
 }
 
-.responsive-table th,
-.responsive-table td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+th,
+td {
+  font-size: 1.6rem;
+  text-align: center;
 }
+
 th {
   color: #ff1654;
-}
-
-.table-row-odd {
-  background-color: rgba(255, 22, 84, 0.2);
-}
-
-.table-row-even {
-  background-color: #fff;
-}
-.button {
-  background-color: #ff1654;
-  color: white;
-  padding: 8px 16px;
-
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  font-weight: 500;
 }
 </style>
