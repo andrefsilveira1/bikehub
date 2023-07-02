@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, onMounted, toRaw } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import MainLayout from "../components/layouts/MainLayout.vue";
 import RentalPointListing from "../components/RentalPointListing.vue";
 import Map from "../components/Map.vue";
@@ -106,7 +106,7 @@ main {
           <span>
             <BikeAvailabilityText :amount="selectedPoint.availableBikes" />
           </span>
-          <Table />
+          <Table :rentalPoint="selectedPoint" />
         </div>
       </div>
       <RentalPointListing

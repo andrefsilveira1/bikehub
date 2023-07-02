@@ -1,10 +1,15 @@
 <script setup>
+import { onMounted, reactive } from "vue";
 import Button from "./common/Button.vue";
-const tableData = [
-  { col1: "Valor 1", col2: "Valor 2", col3: "Valor 3" },
-  { col1: "Valor 4", col2: "Valor 5", col3: "Valor 6" },
-  { col1: "Valor 7", col2: "Valor 8", col3: "Valor 9" },
-];
+import api from "../api";
+
+const { rentalPoint } = defineProps(["rentalPoint"]);
+const bikes = reactive([]);
+
+onMounted(async () => {
+  const { data } = await api.get(`/rentalPoint/${rentalPoint.id}/bikes`);
+  bikes.push(...data);
+});
 </script>
 
 <template>
@@ -19,11 +24,29 @@ const tableData = [
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in tableData" :key="index">
-          <td>{{ item.col1 }}</td>
-          <td>{{ item.col2 }}</td>
-          <td style="text-align: center">{{ item.col3 }}</td>
-          <td style="text-align: center"><Button>Alugar</Button></td>
+        <tr v-for="(bike, index) in bikes" :key="index">
+          <td>BK{{ bike.id }}</td>
+          <td>{{ bike.available ? "Disponível" : "Alugada" }}</td>
+          <td style="text-align: center">
+            {{
+              bike.lastRentalStartTimestamp
+                ? new Date(bike.lastRentalStartTimestamp).toLocaleDateString(
+                    "pt-BR",
+                    {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    }
+                  )
+                : "-"
+            }}
+          </td>
+          <td style="text-align: center">
+            <Button :disabled="!bike.available">Alugar</Button>
+          </td>
         </tr>
       </tbody>
     </table>
