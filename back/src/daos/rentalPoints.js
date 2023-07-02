@@ -10,6 +10,15 @@ export default (fastify) => ({
           (select count(*)::integer
             from available_bikes
             where rental_point_id = rental_points.id) as "availableBikes"
+        `),
+      fastify.knex.raw(`
+        case when id in (
+          select s.rental_point_id
+          from user_subscriptions as s
+          where s.user_id = ${userId}
+        ) then true
+        else false
+        end as subscribed
         `)
     ),
   findById: async (id) =>
