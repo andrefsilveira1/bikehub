@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, defineProps, watchEffect, nextTick } from "vue";
+import { ref, defineProps, watchEffect } from "vue";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -12,8 +12,8 @@ const props = defineProps({
 const mapContainer = ref(null);
 const mapRef = ref(null);
 
-onMounted(() => {
-  nextTick(() => {
+watchEffect(() => {
+  if (props.points.length > 0) {
     mapRef.value = L.map(mapContainer.value, { zoomControl: false }).setView(
       [props.points[0].latitude, props.points[0].longitude],
       13
@@ -25,12 +25,11 @@ onMounted(() => {
       );
       marker.bindPopup(point.name);
     });
-
     L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
       maxZoom: 20,
       subdomains: ["mt0", "mt1", "mt2", "mt3"],
     }).addTo(mapRef.value);
-  });
+  }
 });
 
 watchEffect(() => {
