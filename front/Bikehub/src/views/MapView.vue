@@ -21,6 +21,21 @@ function handleSentCoordinate(coordinate) {
   selectedCoordinate[1] = coordinate[1];
 }
 
+async function onSubscribeButtonClick() {
+  try {
+    if (selectedPoint.value.subscribed) {
+      await api.post(`/rentalPoint/${selectedPoint.value.id}/unsubscribe`);
+      selectedPoint.value.subscribed = false;
+    } else {
+      await api.post(`/rentalPoint/${selectedPoint.value.id}/subscribe`);
+      selectedPoint.value.subscribed = true;
+    }
+  } catch (e) {
+    console.log(e);
+    alert("Could not complete action");
+  }
+}
+
 onMounted(async () => {
   try {
     const { data } = await api.get("/rentalPoints");
@@ -101,7 +116,9 @@ main {
         <div class="modal">
           <header class="modal__header">
             <h1 class="modal__title">Ponto {{ selectedPoint.name }}</h1>
-            <Button variant="secondary">Inscrever-se</Button>
+            <Button variant="secondary" @click="onSubscribeButtonClick()">{{
+              selectedPoint.subscribed ? "Cancelar inscrição" : "Inscrever-se"
+            }}</Button>
           </header>
           <span>
             <BikeAvailabilityText :amount="selectedPoint.availableBikes" />
