@@ -28,7 +28,7 @@ async function login() {
       router.push("/map");
     }
   } catch (error) {
-    console.error(error);
+    alert(error.response.data.message);
   }
 }
 </script>
@@ -38,7 +38,7 @@ async function login() {
     <img src="/bike.jpg" alt="Imagem de fundo" class="main-img" />
     <div class="login-container__right">
       <img src="/logo.svg" class="logo" />
-      <form class="login-form">
+      <form class="login-form" @submit.prevent="login">
         <div class="form-group">
           <label for="email">Email:</label>
           <Input
@@ -59,7 +59,7 @@ async function login() {
             placeholder="Sua senha aqui"
           />
         </div>
-        <button class="login-button" @click="login" type="submit">
+        <button class="login-button" type="submit">
           <span>Entrar</span>
         </button>
       </form>
