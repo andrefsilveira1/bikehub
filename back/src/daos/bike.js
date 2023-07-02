@@ -19,6 +19,29 @@ export default (fastify) => ({
         )
         .where({ bike_id: bikeId, end_timestamp: null })
     )[0],
+  getBikesForRentalPoint: (id) =>
+    fastify.knex
+      .select(
+        "id",
+        fastify.knex.raw(`
+        case
+          when id in (select id from available_bikes) then true
+          else false
+        end as available
+    `),
+        fastify.knex.raw(`
+        case
+          when id not in (select id from available_bikes) then (
+            select start_timestamp
+            from bike_rentals
+            where bike_id = b.id and end_timestamp is null
+          )
+          else null
+        end as "lastRentalStartTimestamp"
+          `)
+      )
+      .from(fastify.knex.ref("bikes").as("b"))
+      .where({ rental_point_id: id }),
   findById: async (id) =>
     (
       await fastify.knex
