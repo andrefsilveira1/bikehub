@@ -37,7 +37,7 @@ export default function rentalPointsRoutes(fastify, _, done) {
     fastify.ws.notify(userId, {
       type: "BIKE_AVAILABILITY_CHANGED",
       rentalPoint: data.name.value,
-      availableBilkes: data.availableBikes.value,
+      availableBikes: data.availableBikes.value,
     });
     res.send();
   });

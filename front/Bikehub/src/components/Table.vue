@@ -14,6 +14,7 @@ onMounted(async () => {
 const rentBike = async (bikeId, index) => {
   try {
     const { data } = await api.post(`/bike/${bikeId}/rent`);
+    rentalPoint.availableBikes -= 1;
     bikes[index].available = false;
     bikes[index].lastRentalStartTimestamp = data.start_timestamp;
   } catch {
