@@ -44,7 +44,15 @@ const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  return { loading, loggedIn, login, validateToken };
+  const logout = () => {
+    token.value = null;
+    delete api.defaults.headers.authorization;
+    loggedIn.value = false;
+    localStorage.removeItem("bikehubToken");
+    router.push("/login");
+  };
+
+  return { loading, loggedIn, login, validateToken, logout };
 });
 
 export default useAuthStore;

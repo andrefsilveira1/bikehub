@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import useAuthStore from "../stores/auth";
+
+const auth = useAuthStore();
 </script>
 <style scoped>
 .navbar {
@@ -39,6 +42,8 @@ import { RouterLink } from "vue-router";
       <RouterLink to="/map">Mapa</RouterLink>
       <div class="circle" />
       <RouterLink to="/subscriptions">Seus alguéis</RouterLink>
+      <div class="circle" />
+      <a href="#" @click="auth.logout()">Logout</a>
     </ul>
   </header>
 </template>
