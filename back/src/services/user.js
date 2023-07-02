@@ -25,6 +25,13 @@ const userService = (fastify) => ({
     );
     return { jwt: token };
   },
+  validateJwt: (token) => {
+    try {
+      jwt.verify(token, process.env.JWT_SECRET);
+    } catch {
+      throw new APIError("Invalid token!", StatusCodes.UNAUTHORIZED);
+    }
+  },
 });
 
 export default userService;

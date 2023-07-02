@@ -14,6 +14,7 @@ const useAuthStore = defineStore("auth", () => {
         data: { jwt },
       } = await api.post("/user/login", { email, password });
       api.defaults.headers.authorization = `Bearer ${jwt}`;
+      localStorage.setItem("bikehubToken", jwt);
       token.value = jwt;
       loggedIn.value = true;
       loading.value = false;
@@ -23,7 +24,27 @@ const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  return { loading, loggedIn, login };
+  const validateToken = async () => {
+    const localStorageJwt = localStorage.getItem("bikehubToken");
+    if (localStorageJwt === null) {
+      loading.value = false;
+      router.push("/login");
+      return;
+    }
+    try {
+      await api.post("/user/validateToken", { jwt: localStorageJwt });
+      token.value = localStorageJwt;
+      loggedIn.value = true;
+      loading.value = false;
+      api.defaults.headers.authorization = `Bearer ${localStorageJwt}`;
+      router.push("/map");
+    } catch {
+      loading.value = false;
+      router.push("/login");
+    }
+  };
+
+  return { loading, loggedIn, login, validateToken };
 });
 
 export default useAuthStore;
