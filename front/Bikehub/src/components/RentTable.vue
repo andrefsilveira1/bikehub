@@ -13,6 +13,15 @@ onMounted(async () => {
     alert(e);
   }
 });
+
+const returnBike = async (id, index) => {
+  try {
+    await api.post(`/bike/${id}/return`);
+    bikes[index].endTimestamp = new Date();
+  } catch (e) {
+    alert(`Was not able to return bike ${e}`);
+  }
+};
 </script>
 
 <template>
@@ -22,6 +31,7 @@ onMounted(async () => {
         <tr style="border: none">
           <th style="padding: 1.5rem">Identificador</th>
           <th style="padding: 1.5rem">Status</th>
+          <th style="padding: 1.5rem">Horário aluguel</th>
           <th></th>
         </tr>
       </thead>
@@ -29,8 +39,24 @@ onMounted(async () => {
         <tr v-for="(bike, index) in bikes" :key="index">
           <td>BK{{ bike.bikeId }}</td>
           <td>{{ bike.endTimestamp === null ? "Ativo" : "Devolvida" }}</td>
+          <td>
+            {{
+              new Date(bike.startTimestamp).toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })
+            }}
+          </td>
           <td style="text-align: center">
-            <Button :disabled="bike.endTimestamp !== null">Devolver</Button>
+            <Button
+              :disabled="bike.endTimestamp !== null"
+              @click="returnBike(bike.bikeId, index)"
+              >Devolver</Button
+            >
           </td>
         </tr>
       </tbody>
