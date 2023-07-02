@@ -18,8 +18,6 @@ services:
       - "27017"
     ports:
       - "27017:27017"
-    volumes:
-      - mongodb_volume:/data
     command: mongod --smallfiles
     networks:
       - default_network
@@ -56,4 +54,3 @@ networks:
   default_network:
 volumes:
   bikehub_volume:
-  mongodb_volume:

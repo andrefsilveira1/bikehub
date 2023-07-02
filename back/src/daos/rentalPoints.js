@@ -1,5 +1,5 @@
 export default (fastify) => ({
-  get: () =>
+  get: (userId) =>
     fastify.knex("rental_points").select(
       "id",
       "name",
@@ -35,11 +35,6 @@ export default (fastify) => ({
         )
         .where({ id })
     )[0],
-    findBikeByRentId: async (id) => 
-    (
-      await fastify.knex
-      .select("*")
-      .from("bikes")
-      .where({ rental_point_id: id })
-    )
+  findBikeByRentId: async (id) =>
+    await fastify.knex.select("*").from("bikes").where({ rental_point_id: id }),
 });

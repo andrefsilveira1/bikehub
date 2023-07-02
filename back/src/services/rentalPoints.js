@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import APIError from "../errors/APIError.js";
 
 const rentalPointsService = (fastify) => ({
-  get: async () => fastify.daos.rentalPoints.get(),
+  get: async (userId) => fastify.daos.rentalPoints.get(userId),
   subscribeToRentalPoint: async (id) => {
     const point = await fastify.daos.rentalPoints.findById(id);
     if (!point)
