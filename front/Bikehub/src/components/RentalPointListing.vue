@@ -2,6 +2,7 @@
 const { cards } = defineProps({ cards: { required: true } });
 import { ref, computed } from "vue";
 import RentalPointCard from "./RentalPointCard.vue";
+import Input from "./common/Input.vue";
 
 const searchInput = ref("");
 const receivedCoordinate = ref(null);
@@ -24,11 +25,7 @@ function handleCoordinateClick(point) {
 <template>
   <div class="left-panel">
     <h2>Pontos de aluguel</h2>
-    <input
-      type="text"
-      placeholder="Busque por pontos de aluguel"
-      v-model="searchInput"
-    />
+    <Input placeholder="Busque por pontos de aluguel" v-model="searchInput" />
     <div class="left-panel__listing">
       <RentalPointCard
         v-for="point in filteredPoints"
