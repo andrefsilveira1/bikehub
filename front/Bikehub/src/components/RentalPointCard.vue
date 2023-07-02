@@ -10,9 +10,9 @@ const { point, lat, lon } = defineProps({
 </script>
 <template>
   <article class="card">
-    <h1>{{ point.title }}</h1>
-    <p>{{ point.subtitle }}</p>
-    <span><BikeAvailabilityText :amount="point.bikenums" /></span>
+    <h1>{{ point.name }}</h1>
+    <p>{{ point.description }}</p>
+    <span><BikeAvailabilityText :amount="point.availableBikes" /></span>
     <Button @click="$emit('open-modal', point)">Visualizar</Button>
   </article>
 </template>
@@ -51,6 +51,8 @@ const { point, lat, lon } = defineProps({
   font-weight: 400;
   color: rgba(9, 12, 8, 0.8);
   margin-bottom: 1rem;
+
+  width: 70%;
 }
 
 .card span {

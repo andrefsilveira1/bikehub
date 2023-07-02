@@ -15,13 +15,15 @@ const mapRef = ref(null);
 onMounted(() => {
   nextTick(() => {
     mapRef.value = L.map(mapContainer.value, { zoomControl: false }).setView(
-      [props.points[0].lat, props.points[0].lon],
+      [props.points[0].latitude, props.points[0].longitude],
       13
     );
 
     props.points.forEach((point) => {
-      const marker = L.marker([point.lat, point.lon]).addTo(mapRef.value);
-      marker.bindPopup(point.title);
+      const marker = L.marker([point.latitude, point.longitude]).addTo(
+        mapRef.value
+      );
+      marker.bindPopup(point.name);
     });
 
     L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
@@ -32,8 +34,12 @@ onMounted(() => {
 });
 
 watchEffect(() => {
-  if (mapRef.value && props.lat !== undefined && props.lon !== undefined) {
-    zoomToRegion(props.lat, props.lon);
+  if (
+    mapRef.value &&
+    props.latitude !== undefined &&
+    props.longitude !== undefined
+  ) {
+    zoomToRegion(props.latiude, props.longitude);
   }
 });
 
