@@ -3,7 +3,7 @@ const { amount } = defineProps(["amount"]);
 </script>
 <template>
   {{ amount === 0 ? "Sem" : amount }} bicicleta{{
-    amount === 1 ? "s" : ""
+    amount === 1 ? "" : "s"
   }}
-  disponíve{{ amount === 1 ? "s" : "is" }}
+  disponíve{{ amount === 1 ? "l" : "is" }}
 </template>
