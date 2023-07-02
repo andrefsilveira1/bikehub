@@ -11,10 +11,10 @@ const tableData = [
   <div class="table-container">
     <table class="responsive-table">
       <thead>
-        <tr>
-          <th>Identificador</th>
-          <th>Status</th>
-          <th style="text-align: center">Horário de Aluguel</th>
+        <tr style="border: none">
+          <th style="padding: 1.5rem">Identificador</th>
+          <th style="padding: 1.5rem">Status</th>
+          <th style="padding: 1.5rem">Horário de Aluguel</th>
           <th></th>
         </tr>
       </thead>
@@ -34,6 +34,8 @@ const tableData = [
 .table-container {
   width: 100%;
   overflow-x: auto;
+  border-radius: 8px 8px 0px 0px;
+  border: 1px solid #c4c4c4;
 }
 
 .responsive-table {
@@ -41,10 +43,16 @@ const tableData = [
   border-collapse: collapse;
 }
 
+tr {
+  border-bottom: 1px solid #c4c4c4;
+  border-top: 1px solid #c4c4c4;
+}
+
 th,
 td {
   font-size: 1.6rem;
   text-align: center;
+  padding: 1rem;
 }
 
 th {
