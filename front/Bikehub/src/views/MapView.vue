@@ -6,7 +6,7 @@ import Map from "../components/Map.vue";
 import Button from "../components/common/Button.vue";
 import BikeAvailabilityText from "../components/BikeAvailabilityText.vue";
 import api from "../api";
-import Table from "../components/table/index.vue"
+import Table from "../components/table/index.vue";
 
 const selectedPoint = ref(null);
 const selectedCoordinate = reactive([]);
@@ -100,11 +100,11 @@ main {
       >
         <div class="modal">
           <header class="modal__header">
-            <h1 class="modal__title">Ponto {{ selectedPoint.title }}</h1>
+            <h1 class="modal__title">Ponto {{ selectedPoint.name }}</h1>
             <Button variant="secondary">Inscrever-se</Button>
           </header>
           <span>
-            <BikeAvailabilityText :amount="selectedPoint.bikenums" />
+            <BikeAvailabilityText :amount="selectedPoint.availableBikes" />
           </span>
           <Table />
         </div>

@@ -11,8 +11,8 @@ const filteredPoints = computed(() => {
   if (searchInput.value === "") return cards;
   return cards.filter(
     (point) =>
-      point.title.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-      point.subtitle.toLowerCase().includes(searchInput.value.toLowerCase())
+      point.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+      point.description.toLowerCase().includes(searchInput.value.toLowerCase())
   );
 });
 const emit = defineEmits(["open-modal", "sentCoordinate"]);
