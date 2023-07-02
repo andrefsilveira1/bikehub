@@ -20,6 +20,17 @@ async function orionPlugin(fastify, _, done) {
         { headers: { "Content-Type": "text/plain" } }
       );
     },
+    async unsubscribeToRentalPoint(rentalPointId, userId) {
+      const subscription =
+        await fastify.daos.subscription.getByUserAndRentalPoint(
+          userId,
+          rentalPointId
+        );
+      await instance.delete(
+        `/v2/subscriptions/${subscription.subscription_id}`
+      );
+      await fastify.daos.subscription.delete(subscription.subscription_id);
+    },
     async subscribeToRentalPoint(rentalPointId, userId) {
       const response = await instance.post(`/v2/subscriptions`, {
         subject: {

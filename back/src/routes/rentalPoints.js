@@ -9,8 +9,14 @@ export default function rentalPointsRoutes(fastify, _, done) {
     });
     instance.post("/rentalPoint/:id/subscribe", async (req, res) => {
       const { id } = req.params;
-      await fastify.services.rentalPoints.subscribeToRentalPoint(id);
+      await fastify.services.rentalPoints.findPoint(id);
       await fastify.orion.subscribeToRentalPoint(id, req.user.id);
+      res.code(204).send();
+    });
+    instance.post("/rentalPoint/:id/unsubscribe", async (req, res) => {
+      const { id } = req.params;
+      await fastify.services.rentalPoints.findPoint(id);
+      await fastify.orion.unsubscribeToRentalPoint(id, req.user.id);
       res.code(204).send();
     });
     instance.get("/rentalPoint/:id/bikes", async (req, res) => {
