@@ -32,6 +32,13 @@ const userService = (fastify) => ({
       throw new APIError("Invalid token!", StatusCodes.UNAUTHORIZED);
     }
   },
+  getBikesByUser: async (id) => {
+    const bikes = await fastify.daos.user.findBikesByUser(id);
+    if(!bikes) {
+      throw new APIError("Invalid token!", StatusCodes.BAD_REQUEST);
+    }
+    return bikes;
+  }
 });
 
 export default userService;

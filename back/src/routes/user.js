@@ -43,4 +43,13 @@ export default function userRoutes(fastify, _, done) {
     }
   );
   done();
+
+  fastify.get("/:id/bikes", async (req, res) => {
+    const { id } = req.params;
+    const bikes = await fastify.services.user.getBikesByUser(id);
+    return res.send(bikes);
+  });
+
+  done();
+
 }
