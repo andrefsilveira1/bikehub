@@ -18,7 +18,7 @@ const filteredPoints = computed(() => {
 const emit = defineEmits(["open-modal", "sentCoordinate"]);
 
 function handleCoordinateClick(point) {
-  receivedCoordinate.value = [point.lat, point.lon];
+  receivedCoordinate.value = [point.latitude, point.longitude];
   emit("sentCoordinate", receivedCoordinate.value);
 }
 </script>

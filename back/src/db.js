@@ -4,6 +4,7 @@ import Knex from "knex";
 import userDao from "./daos/user.js";
 import rentalPointsDao from "./daos/rentalPoints.js";
 import bikeDao from "./daos/bike.js";
+import subscriptionDao from "./daos/subscription.js";
 
 async function database(fastify, _, done) {
   const knex = Knex({
@@ -25,6 +26,7 @@ async function database(fastify, _, done) {
     user: userDao(fastify),
     rentalPoints: rentalPointsDao(fastify),
     bike: bikeDao(fastify),
+    subscription: subscriptionDao(fastify),
   });
   done();
 }

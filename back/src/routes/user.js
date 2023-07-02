@@ -1,3 +1,6 @@
+import fp from "fastify-plugin";
+import auth from "../plugins/auth.js";
+
 export default function userRoutes(fastify, _, done) {
   fastify.post(
     "/login",
@@ -42,14 +45,16 @@ export default function userRoutes(fastify, _, done) {
       return res.code(204).send();
     }
   );
-  done();
 
-  fastify.get("/:id/bikes", async (req, res) => {
-    const { id } = req.params;
-    const bikes = await fastify.services.user.getBikesByUser(id);
-    return res.send(bikes);
+  fastify.register((instance, _, done) => {
+    instance.register(fp(auth));
+    instance.get("/bikes", async (req, res) => {
+      const { id } = req.user;
+      const bikes = await fastify.services.user.getBikesByUser(id);
+      return res.send(bikes);
+    });
+    done();
   });
 
   done();
-
 }

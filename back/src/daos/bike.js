@@ -1,6 +1,11 @@
 export default (fastify) => ({
   createRental: async (bikeId, userId) =>
-    fastify.knex("bike_rentals").insert([{ bike_id: bikeId, user_id: userId }]),
+    (
+      await fastify
+        .knex("bike_rentals")
+        .insert([{ bike_id: bikeId, user_id: userId }])
+        .returning("*")
+    )[0],
   endRental: (rentalId) =>
     fastify
       .knex("bike_rentals")

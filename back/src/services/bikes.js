@@ -10,8 +10,8 @@ const bikesService = (fastify) => ({
         "Bike isn't available",
         StatusCodes.UNPROCESSABLE_ENTITY
       );
-    await fastify.daos.bike.createRental(bikeId, userId);
-    return bike;
+    const rental = await fastify.daos.bike.createRental(bikeId, userId);
+    return { bike, rental };
   },
   returnBike: async (bikeId, userId) => {
     const bike = await fastify.daos.bike.findById(bikeId);

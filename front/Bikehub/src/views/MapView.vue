@@ -8,6 +8,12 @@ import BikeAvailabilityText from "../components/BikeAvailabilityText.vue";
 import api from "../api";
 import Table from "../components/Table.vue";
 
+const ws = reactive(
+  new WebSocket(
+    `ws://localhost:3000/ws?token=${api.defaults.headers.authorization}`
+  )
+);
+
 const selectedPoint = ref(null);
 const selectedCoordinate = reactive([]);
 const points = reactive([]);
@@ -21,8 +27,35 @@ function handleSentCoordinate(coordinate) {
   selectedCoordinate[1] = coordinate[1];
 }
 
-onMounted(async () => {
+async function onSubscribeButtonClick() {
   try {
+    if (selectedPoint.value.subscribed) {
+      await api.post(`/rentalPoint/${selectedPoint.value.id}/unsubscribe`);
+      selectedPoint.value.subscribed = false;
+    } else {
+      await api.post(`/rentalPoint/${selectedPoint.value.id}/subscribe`);
+      selectedPoint.value.subscribed = true;
+    }
+  } catch (e) {
+    console.log(e);
+    alert("Could not complete action");
+  }
+}
+
+onMounted(async () => {
+  ws.addEventListener("message", ({ data }) => {
+    const msg = JSON.parse(data);
+    console.log(msg);
+    const rentalPoint = points.find((point) => point.name === msg.rentalPoint);
+    if (rentalPoint.availableBikes > parseInt(msg.availableBikes, 10)) {
+      alert(`Bicicleta alugada no ponto ${msg.rentalPoint}`);
+    } else if (rentalPoint.availableBikes < parseInt(msg.availableBikes, 10)) {
+      alert(`Bicicleta devolvida no ponto ${msg.rentalPoint}`);
+    }
+    rentalPoint.availableBikes = parseInt(msg.availableBikes, 10);
+  });
+  try {
+    console.log(ws);
     const { data } = await api.get("/rentalPoints");
     points.push(...data);
   } catch (e) {
@@ -101,7 +134,9 @@ main {
         <div class="modal">
           <header class="modal__header">
             <h1 class="modal__title">Ponto {{ selectedPoint.name }}</h1>
-            <Button variant="secondary">Inscrever-se</Button>
+            <Button variant="secondary" @click="onSubscribeButtonClick()">{{
+              selectedPoint.subscribed ? "Cancelar inscrição" : "Inscrever-se"
+            }}</Button>
           </header>
           <span>
             <BikeAvailabilityText :amount="selectedPoint.availableBikes" />
@@ -116,8 +151,8 @@ main {
       />
       <Map
         :points="points"
-        :lat="selectedCoordinate[0]"
-        :lon="selectedCoordinate[1]"
+        :latitude="selectedCoordinate[0]"
+        :longitude="selectedCoordinate[1]"
       />
     </main>
   </MainLayout>

@@ -10,6 +10,17 @@ onMounted(async () => {
   const { data } = await api.get(`/rentalPoint/${rentalPoint.id}/bikes`);
   bikes.push(...data);
 });
+
+const rentBike = async (bikeId, index) => {
+  try {
+    const { data } = await api.post(`/bike/${bikeId}/rent`);
+    rentalPoint.availableBikes -= 1;
+    bikes[index].available = false;
+    bikes[index].lastRentalStartTimestamp = data.start_timestamp;
+  } catch {
+    alert("Error happened while trying to rent bike!");
+  }
+};
 </script>
 
 <template>
@@ -45,7 +56,11 @@ onMounted(async () => {
             }}
           </td>
           <td style="text-align: center">
-            <Button :disabled="!bike.available">Alugar</Button>
+            <Button
+              :disabled="!bike.available"
+              @click="rentBike(bike.id, index)"
+              >Alugar</Button
+            >
           </td>
         </tr>
       </tbody>

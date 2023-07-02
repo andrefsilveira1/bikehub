@@ -5,12 +5,18 @@ export default function rentalPointsRoutes(fastify, _, done) {
   fastify.register((instance, _, done) => {
     instance.register(fp(auth));
     instance.get("/rentalPoints", async (req, res) => {
-      return fastify.services.rentalPoints.get();
+      return fastify.services.rentalPoints.get(req.user.id);
     });
     instance.post("/rentalPoint/:id/subscribe", async (req, res) => {
       const { id } = req.params;
-      await fastify.services.rentalPoints.subscribeToRentalPoint(id);
+      await fastify.services.rentalPoints.findPoint(id);
       await fastify.orion.subscribeToRentalPoint(id, req.user.id);
+      res.code(204).send();
+    });
+    instance.post("/rentalPoint/:id/unsubscribe", async (req, res) => {
+      const { id } = req.params;
+      await fastify.services.rentalPoints.findPoint(id);
+      await fastify.orion.unsubscribeToRentalPoint(id, req.user.id);
       res.code(204).send();
     });
     instance.get("/rentalPoint/:id/bikes", async (req, res) => {
@@ -24,13 +30,14 @@ export default function rentalPointsRoutes(fastify, _, done) {
   });
   fastify.post("/rentalPoint/notification", async (req, res) => {
     const { subscriptionId } = req.body;
-    const userId =
-      fastify.orion.getUserAssociatedWithNotificationId(subscriptionId);
+    const userId = await fastify.orion.getUserAssociatedWithNotificationId(
+      subscriptionId
+    );
     const data = req.body.data[0];
     fastify.ws.notify(userId, {
       type: "BIKE_AVAILABILITY_CHANGED",
       rentalPoint: data.name.value,
-      availableBilkes: data.availableBikes.value,
+      availableBikes: data.availableBikes.value,
     });
     res.send();
   });

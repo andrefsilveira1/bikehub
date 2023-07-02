@@ -3,9 +3,6 @@ import axios from "axios";
 
 async function orionPlugin(fastify, _, done) {
   const instance = axios.create({ baseURL: process.env.ORION_URL });
-  // This should be stored in the database.
-  // I'll do this later.
-  const userSubscribed = {};
   fastify.decorate("orion", {
     onBikeRent: async (rentalPointId) => {
       const point = await fastify.daos.rentalPoints.findById(rentalPointId);
@@ -22,6 +19,17 @@ async function orionPlugin(fastify, _, done) {
         point.availableBikes.toString(),
         { headers: { "Content-Type": "text/plain" } }
       );
+    },
+    async unsubscribeToRentalPoint(rentalPointId, userId) {
+      const subscription =
+        await fastify.daos.subscription.getByUserAndRentalPoint(
+          userId,
+          rentalPointId
+        );
+      await instance.delete(
+        `/v2/subscriptions/${subscription.subscription_id}`
+      );
+      await fastify.daos.subscription.delete(subscription.subscription_id);
     },
     async subscribeToRentalPoint(rentalPointId, userId) {
       const response = await instance.post(`/v2/subscriptions`, {
@@ -41,10 +49,16 @@ async function orionPlugin(fastify, _, done) {
         },
       });
       const subscriptionId = response.headers.location.split("/")[3];
-      userSubscribed[subscriptionId] = userId;
+      await fastify.daos.subscription.create(
+        userId,
+        rentalPointId,
+        subscriptionId
+      );
     },
-    getUserAssociatedWithNotificationId: (notificationId) =>
-      userSubscribed[notificationId],
+    getUserAssociatedWithNotificationId: async (subscriptionId) => {
+      const subscription = await fastify.daos.subscription.get(subscriptionId);
+      return subscription.user_id;
+    },
   });
   done();
 }

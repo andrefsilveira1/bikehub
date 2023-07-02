@@ -2,15 +2,18 @@
 import { ref, defineProps, watchEffect } from "vue";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import redMarker from "../assets/marker.png";
 
 const props = defineProps({
   points: { type: Array, required: true },
-  lat: Number,
-  lon: Number,
+  latitude: Number,
+  longitude: Number,
 });
 
 const mapContainer = ref(null);
 const mapRef = ref(null);
+const markerColor = "#FF1654";
+
 
 watchEffect(() => {
   if (props.points.length > 0) {
@@ -20,7 +23,14 @@ watchEffect(() => {
     );
 
     props.points.forEach((point) => {
-      const marker = L.marker([point.latitude, point.longitude]).addTo(
+      const customIcon = L.icon({
+        iconUrl: redMarker,
+        iconSize: [50, 50],
+        iconAnchor: [12, 41],
+      });
+      const marker = L.marker([point.latitude, point.longitude], {
+        icon: customIcon
+      }).addTo(
         mapRef.value
       );
       marker.bindPopup(point.name);
@@ -33,12 +43,13 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
+  console.log("MUDOU")
   if (
     mapRef.value &&
     props.latitude !== undefined &&
     props.longitude !== undefined
   ) {
-    zoomToRegion(props.latiude, props.longitude);
+    zoomToRegion(props.latitude, props.longitude);
   }
 });
 
