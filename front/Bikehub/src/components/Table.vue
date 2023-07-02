@@ -1,5 +1,5 @@
 <script setup>
-import Button from "../common/Button.vue";
+import Button from "./common/Button.vue";
 const tableData = [
   { col1: "Valor 1", col2: "Valor 2", col3: "Valor 3" },
   { col1: "Valor 4", col2: "Valor 5", col3: "Valor 6" },

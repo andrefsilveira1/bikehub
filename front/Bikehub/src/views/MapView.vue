@@ -6,7 +6,7 @@ import Map from "../components/Map.vue";
 import Button from "../components/common/Button.vue";
 import BikeAvailabilityText from "../components/BikeAvailabilityText.vue";
 import api from "../api";
-import Table from "../components/table/index.vue";
+import Table from "../components/Table.vue";
 
 const selectedPoint = ref(null);
 const selectedCoordinate = reactive([]);
