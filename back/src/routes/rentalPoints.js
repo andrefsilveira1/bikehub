@@ -13,6 +13,13 @@ export default function rentalPointsRoutes(fastify, _, done) {
       await fastify.orion.subscribeToRentalPoint(id, req.user.id);
       res.code(204).send();
     });
+    instance.get("/rentalPoint/:id/bikes", async (req, res) => {
+      const { id } = req.params;
+      const bikes = await instance.services.rentalPoints.getRentalPointBikes(
+        id
+      );
+      return res.send(bikes);
+    });
     done();
   });
   fastify.post("/rentalPoint/notification", async (req, res) => {
@@ -26,12 +33,6 @@ export default function rentalPointsRoutes(fastify, _, done) {
       availableBilkes: data.availableBikes.value,
     });
     res.send();
-  });
-  done();
-  fastify.get("/rentalPoint/:id/bikes", async (req, res) => {
-    const {id} = req.params;
-    const bikes = await fastify.services.rentalPoints.getBikeByRentId(id);
-    res.send(bikes);
   });
   done();
 }

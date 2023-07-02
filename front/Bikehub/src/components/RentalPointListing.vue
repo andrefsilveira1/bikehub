@@ -2,6 +2,7 @@
 const { cards } = defineProps({ cards: { required: true } });
 import { ref, computed } from "vue";
 import RentalPointCard from "./RentalPointCard.vue";
+import Input from "./common/Input.vue";
 
 const searchInput = ref("");
 const receivedCoordinate = ref(null);
@@ -10,8 +11,8 @@ const filteredPoints = computed(() => {
   if (searchInput.value === "") return cards;
   return cards.filter(
     (point) =>
-      point.title.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-      point.subtitle.toLowerCase().includes(searchInput.value.toLowerCase())
+      point.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+      point.description.toLowerCase().includes(searchInput.value.toLowerCase())
   );
 });
 const emit = defineEmits(["open-modal", "sentCoordinate"]);
@@ -24,11 +25,7 @@ function handleCoordinateClick(point) {
 <template>
   <div class="left-panel">
     <h2>Pontos de aluguel</h2>
-    <input
-      type="text"
-      placeholder="Busque por pontos de aluguel"
-      v-model="searchInput"
-    />
+    <Input placeholder="Busque por pontos de aluguel" v-model="searchInput" />
     <div class="left-panel__listing">
       <RentalPointCard
         v-for="point in filteredPoints"

@@ -21,5 +21,26 @@ export default function userRoutes(fastify, _, done) {
       return res.code(201).send(response);
     }
   );
+  fastify.post(
+    "/validateToken",
+    {
+      schema: {
+        body: {
+          type: "object",
+          required: ["jwt"],
+          properties: {
+            jwt: { type: "string" },
+          },
+        },
+      },
+    },
+    async (req, res) => {
+      const {
+        body: { jwt },
+      } = req;
+      fastify.services.user.validateJwt(jwt);
+      return res.code(204).send();
+    }
+  );
   done();
 }

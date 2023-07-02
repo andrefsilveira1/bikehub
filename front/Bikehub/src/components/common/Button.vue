@@ -1,14 +1,19 @@
 <script setup>
 defineEmits(["click"]);
-const { variant } = defineProps({
+const { variant, disabled } = defineProps({
   variant: {
     default: "primary",
+  },
+  disabled: {
+    default: false,
   },
 });
 </script>
 
 <template>
-  <button :class="variant" @click="$emit('click')"><slot /></button>
+  <button :class="variant" @click="$emit('click')" :disabled="disabled">
+    <slot />
+  </button>
 </template>
 
 <style scoped>
@@ -31,6 +36,12 @@ button.primary {
 button.secondary {
   color: #ff1654;
   background: white;
+}
+
+button:disabled {
+  cursor: not-allowed !important;
+  background-color: #c4c4c4;
+  opacity: 0.6;
 }
 
 button.secondary:hover {

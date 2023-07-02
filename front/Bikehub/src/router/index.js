@@ -16,10 +16,10 @@ const router = createRouter({
       component: SubscriptionsView,
     },
     {
-      path: "/",
+      path: "/login",
       name: "login",
       component: LoginView,
-    }
+    },
   ],
 });
 

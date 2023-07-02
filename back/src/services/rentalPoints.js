@@ -8,12 +8,12 @@ const rentalPointsService = (fastify) => ({
     if (!point)
       throw new APIError("Rental point not found", StatusCodes.NOT_FOUND);
   },
-  getBikeByRentId: async (id) => {
-    const bikes = await fastify.daos.rentalPoints.findBikeByRentId(id);
-    if(!bikes)
-      throw new APIError("There is no bikes available", StatusCodes.NOT_FOUND);
-    return bikes;
-  }
+  getRentalPointBikes: async (id) => {
+    const point = await fastify.daos.rentalPoints.findById(id);
+    if (!point)
+      throw new APIError("Rental point not found!", StatusCodes.NOT_FOUND);
+    return fastify.daos.bike.getBikesForRentalPoint(id);
+  },
 });
 
 export default rentalPointsService;
