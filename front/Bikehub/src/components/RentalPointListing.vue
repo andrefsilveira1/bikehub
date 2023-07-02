@@ -1,6 +1,6 @@
 <script setup>
 const { cards } = defineProps({ cards: { required: true } });
-import { ref, computed, defineEmits } from "vue";
+import { ref, computed } from "vue";
 import RentalPointCard from "./RentalPointCard.vue";
 
 const searchInput = ref("");
@@ -14,13 +14,12 @@ const filteredPoints = computed(() => {
       point.subtitle.toLowerCase().includes(searchInput.value.toLowerCase())
   );
 });
-const emit = defineEmits(['open-modal', 'sentCoordinate']);
+const emit = defineEmits(["open-modal", "sentCoordinate"]);
 
 function handleCoordinateClick(point) {
   receivedCoordinate.value = [point.lat, point.lon];
-  emit('sentCoordinate', receivedCoordinate.value);
+  emit("sentCoordinate", receivedCoordinate.value);
 }
-
 </script>
 <template>
   <div class="left-panel">
@@ -32,9 +31,9 @@ function handleCoordinateClick(point) {
     />
     <div class="left-panel__listing">
       <RentalPointCard
-      v-for="point in filteredPoints"
-      @open-modal="(point) => $emit('open-modal', point)"
-      @click="handleCoordinateClick(point)"
+        v-for="point in filteredPoints"
+        @open-modal="(point) => $emit('open-modal', point)"
+        @click="handleCoordinateClick(point)"
         :key="point.id"
         :point="point"
       />
@@ -51,7 +50,7 @@ function handleCoordinateClick(point) {
 }
 
 .left-panel__listing {
-  padding-top: 2rem;
+  padding: 2rem 0;
   height: calc(100% - 100px - 2rem);
   overflow-y: auto;
 }

@@ -28,4 +28,10 @@ export default function rentalPointsRoutes(fastify, _, done) {
     res.send();
   });
   done();
+  fastify.get("/rentalPoint/:id/bikes", async (req, res) => {
+    const {id} = req.params;
+    const bikes = await fastify.services.rentalPoints.getBikeByRentId(id);
+    res.send(bikes);
+  });
+  done();
 }

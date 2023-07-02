@@ -1,137 +1,144 @@
 <template>
-    <div class="login-container">
-      <div class="image-container">
-        <img src="/bike.jpg" alt="Imagem de fundo">
-      </div>
-      <div class="login-card">
-        <img src="/logo.svg" />
-        <form class="loginForm">
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" v-model="email" required placeholder="seuemail@email.com">
-        </div>
-          <div class="form-group">
-            <label for="password">Senha:</label>
-            <input type="password" id="password" v-model="password" required>
-          </div>
-          <a href="#" class="login-button" @click="login"><span>Entrar</span></a>
-        </form>
-      </div>
+  <div class="login-container">
+    <div class="image-container">
+      <img src="/bike.jpg" alt="Imagem de fundo" />
     </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  import router from "../../router/index";
-  export default {
-    data() {
-      return {
-        email: '',
-        password: ''
+    <div class="login-card">
+      <img src="/logo.svg" />
+      <form class="loginForm">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            v-model="email"
+            required
+            placeholder="seuemail@email.com"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Senha:</label>
+          <input type="password" id="password" v-model="password" required />
+        </div>
+        <a href="#" class="login-button" @click="login"><span>Entrar</span></a>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import api from "../../api";
+import router from "../../router/index";
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    async login() {
+      const loginData = {
+        email: this.email,
+        password: this.password,
       };
-    },
-    methods: {
-      async login() {
-        const loginData = {
-          email: this.email,
-          password: this.password,
+
+      try {
+        const response = await api.post("/user/login", loginData);
+        const token = {
+          token: response.data,
         };
-        
-        try {
-          console.log("LOGIN:", loginData);
-          const response = await axios.post('http://localhost:3000/user/login', loginData);
-          const token = {
-            token: response.data
-          };
-          
-          const validate = await axios.post('http://localhost:3000/validate', token);
-      
+
+        const validate = await api.post("/validate", token);
+
         if (validate) {
-          router.push('/map');
+          api.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${token.token.jwt}`;
+          router.push("/map");
         }
       } catch (error) {
         console.error(error);
       }
-    }
-  }
+    },
+  },
 };
-  </script>
-  
-  <style scoped>
-  .login-container {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    height: 100vh;
-  }
-  
-  .image-container {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .image-container img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .login-card {
-    background-color: white;
+</script>
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  .loginForm {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 2px 0px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 5px;
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  h2 {
-    margin-bottom: 1rem;
-  }
-  
-  .form-group {
-    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    font-size: 2rem;
-    margin: 4rem;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ff1654;
-    border-radius: 4px;
-  }
-  
-  .login-button {
-    background-color: white;
-    color: #333;
-    padding: 1rem 4rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    padding-bottom: 40px;
-    border: 1px solid #ff1654;
-  }
+<style scoped>
+.login-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  height: 100vh;
+}
 
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
 
-  a {
+.image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.login-card {
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.loginForm {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 2px 0px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 2rem;
+  margin: 4rem;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ff1654;
+  border-radius: 4px;
+}
+
+.login-button {
+  background-color: white;
+  color: #333;
+  padding: 1rem 4rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  padding-bottom: 40px;
+  border: 1px solid #ff1654;
+}
+
+a {
   display: block;
   width: 200px;
   height: 40px;
@@ -144,13 +151,12 @@
   letter-spacing: 2px;
   text-align: center;
   position: relative;
-  transition: all .35s;
+  transition: all 0.35s;
 }
 
 a span {
   position: relative;
   z-index: 2;
-
 }
 
 a:after {
@@ -161,18 +167,17 @@ a:after {
   width: 0;
   height: 100%;
   background: #ff1654;
-  transition: all .35s;
+  transition: all 0.35s;
   border-radius: 4px;
 }
 
-a:hover{
+a:hover {
   color: #fff;
 }
 span {
 }
 
-a:hover:after{
+a:hover:after {
   width: 100%;
 }
-  </style>
-  
+</style>
