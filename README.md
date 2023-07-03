@@ -16,3 +16,4 @@ Web project using fastify and vue
 ## Using Bikehub:
 
 There is pre registered users that you can log in with them. Take a look at back/database/seeds/create_default_users`. If you want, change the users as you wish.
+
